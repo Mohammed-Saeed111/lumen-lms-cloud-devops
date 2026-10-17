@@ -1,0 +1,67 @@
+{
+  "common": {
+    "loading": "Loading…",
+    "error": "Something went wrong",
+    "retry": "Try again",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "confirm": "Confirm",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "search": "Search"
+  },
+  "nav": {
+    "courses": "Training Programs",
+    "myLearning": "Worker Training",
+    "teach": "Trainer Portal",
+    "dashboard": "Dashboard",
+    "settings": "Settings",
+    "logout": "Log out"
+  },
+  "auth": {
+    "login": "Log in",
+    "register": "Sign up",
+    "forgotPassword": "Forgot password?",
+    "email": "Work Email",
+    "password": "Password",
+    "name": "Full name",
+    "verifyEmailPending": "Check your inbox to verify your email."
+  },
+  "catalog": {
+    "title": "Factory Training Programs",
+    "empty": "No training programs match your filters",
+    "reset": "Reset filters",
+    "filterCategory": "Category / Department",
+    "filterLevel": "Competency Level",
+    "filterLanguage": "Language"
+  },
+  "course": {
+    "enroll": "Assign / Start Training",
+    "continueLearning": "Continue Training Step",
+    "lessonsCount": "{{count}} learning step",
+    "lessonsCount_plural": "{{count}} learning steps",
+    "duration": "{{minutes}} min",
+    "level": {
+      "beginner": "Standard / Foundational",
+      "intermediate": "Operational",
+      "advanced": "Specialized / High-Hazard"
+    }
+  },
+  "quiz": {
+    "start": "Begin Safety Assessment",
+    "submit": "Submit Verification",
+    "retake": "Retake Safety Assessment",
+    "passed": "Assessment Passed — Qualified!",
+    "notYet": "Competency Standard Not Yet Met",
+    "timeLeft": "Time Remaining",
+    "tabSwitchWarning": "Focus change detected — maintain attention during safety assessments."
+  },
+  "footer": {
+    "about": "About Factory LMS",
+    "terms": "Operating Guidelines",
+    "privacy": "Privacy Policy"
+  }
+}
