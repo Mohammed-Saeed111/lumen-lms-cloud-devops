@@ -93,3 +93,10 @@ temp/
 /server/audit-report.json
 /server/server_err.txt
 /server/server_out.txt
+# Terraform
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+*.tfplan
+crash.log
+crash.*.log
