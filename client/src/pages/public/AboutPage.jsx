@@ -18,59 +18,59 @@ import { ROUTES } from '../../utils/constants.js';
 
 const PILLARS = [
   {
-    icon: 'Sparkles',
-    title: 'Project-based by default',
-    body: 'Every course ends in something you can show: a deployed app, a working API, a portfolio piece. Lessons exist to unblock the project, not the other way around.',
-  },
-  {
     icon: 'ShieldCheck',
-    title: 'Honest pricing & permanence',
-    body: 'No bait-and-switch sales, no “lifetime access” asterisks. If a course is removed by an instructor, paid learners keep access for at least 12 months.',
-  },
-  {
-    icon: 'Users',
-    title: 'Community over content firehose',
-    body: 'A small, active discussion forum and weekly cohort calls beat a library of 30,000 abandoned courses. We curate aggressively and keep the catalog focused.',
+    title: 'Standard Operating Procedures & Safety',
+    body: 'Every training module directly reinforces standardized operating procedures (SOPs), workplace safety protocols, and hazard mitigation on the plant floor.',
   },
   {
     icon: 'Award',
-    title: 'Verifiable certificates',
-    body: 'Every certificate carries a signed ID that can be checked against our public registry — so what you finished can\u2019t be faked, and what you didn\u2019t can\u2019t be claimed.',
+    title: 'Verifiable Competency Records',
+    body: 'Training records and qualification tracking designed to support plant safety protocols and internal workforce oversight.',
+  },
+  {
+    icon: 'Users',
+    title: 'Supervisor & Workforce Alignment',
+    body: 'Connecting shift supervisors, technical trainers, and front-line workers with clear role assignments and tracked progression paths.',
+  },
+  {
+    icon: 'TrendingUp',
+    title: 'Continuous Skill & Safety Qualification',
+    body: 'Empowering operators with structured digital curriculum and assessment gates before undertaking critical machinery operations.',
   },
 ];
 
 const PRINCIPLES = [
   {
-    title: 'Accessibility is not an add-on.',
-    body: 'WCAG 2.1 AA is the floor we ship to, not a stretch goal we promise for next quarter. Keyboard navigation, screen-reader labels and reduced-motion support are part of every PR.',
+    title: 'Safety is the primary baseline.',
+    body: 'Operational excellence starts with uncompromised worker safety and rigorous verification of mandatory training.',
   },
   {
-    title: 'Performance is a feature.',
-    body: 'Pages load in under two seconds on a mid-range phone over 4G. We measure it, regress on it, and refuse to merge work that breaks it.',
+    title: 'Traceable workforce records.',
+    body: 'Training records, timestamps, and assessment completions remain structured and accessible for internal supervisory oversight.',
   },
   {
-    title: 'Privacy is the default.',
-    body: 'No advertising trackers, no fingerprinting, no selling data. The only cookies we set are the ones the platform literally cannot run without.',
+    title: 'Accessibility across the facility.',
+    body: 'Responsive interfaces optimized for shop-floor kiosks, rugged tablets, and control room workstations.',
   },
   {
-    title: 'Open by design.',
-    body: 'Public roadmap, public changelog, public status page. Surprises belong in fiction, not in software your career depends on.',
+    title: 'Clear operational transparency.',
+    body: 'Eliminating ambiguous qualification tracking so plant leadership always knows workforce readiness status.',
   },
 ];
 
 const STATS = [
-  { value: '12,400+', label: 'Active learners' },
-  { value: '180+', label: 'Published courses' },
-  { value: '94%', label: 'Course-completion satisfaction' },
-  { value: '24/7', label: 'Self-serve learning' },
+  { value: 'SOP', label: 'Standardized workflows' },
+  { value: 'EHS', label: 'Safety documentation' },
+  { value: '24/7', label: 'Plant floor accessibility' },
+  { value: 'Role', label: 'Based qualification' },
 ];
 
 export default function AboutPage() {
   return (
     <>
       <Seo
-        title="About"
-        description="Learn what Lumen LMS is, who builds it, and the mission behind the platform — practical, project-based learning for everyone."
+        title="About Opervanta"
+        description="Industrial Workforce Training & Competency Management Platform — منصة التدريب الصناعي وإدارة كفاءة العاملين."
         url="/about"
       />
 
@@ -83,32 +83,33 @@ export default function AboutPage() {
           />
           <div className="mx-auto max-w-5xl px-6 py-20 sm:py-24">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-              About Lumen LMS
+              About Opervanta
             </p>
             <h1 className="mt-4 text-4xl font-semibold leading-tight tracking-tight text-text sm:text-5xl">
-              Practical, project-based learning — built for the careers people
-              actually want.
+              Industrial Workforce Training &amp; Competency Management Platform
             </h1>
+            <p className="mt-3 text-lg font-medium text-text-subtle font-arabic" dir="rtl">
+              منصة التدريب الصناعي وإدارة كفاءة العاملين.
+            </p>
             <p className="mt-6 max-w-2xl text-lg leading-relaxed text-text-muted">
-              We started Lumen LMS because the gap between &ldquo;watched a
-              tutorial&rdquo; and &ldquo;shipped something real&rdquo; was
-              getting wider, not smaller. Our courses are short, opinionated
-              and end with you having built the thing.
+              Opervanta is purpose-built to help industrial facilities and manufacturing plants
+              organize employee training, track qualification progress, and prepare operators
+              for safe, compliant shop-floor execution.
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link to={ROUTES.catalog}>
                 <Button size="lg" rightIcon={<Icon name="ArrowRight" size={18} />}>
-                  Browse courses
+                  Training catalog
                 </Button>
               </Link>
               <Link to={ROUTES.teach}>
                 <Button
                   size="lg"
                   variant="outline"
-                  leftIcon={<Icon name="GraduationCap" size={18} />}
+                  leftIcon={<Icon name="ShieldCheck" size={18} />}
                 >
-                  Teach on Lumen
+                  Trainer portal
                 </Button>
               </Link>
             </div>
@@ -132,23 +133,15 @@ export default function AboutPage() {
         {/* Mission --------------------------------------------------- */}
         <section className="mx-auto max-w-3xl px-6 py-20">
           <p className="text-xs font-semibold uppercase tracking-[0.16em] text-text-subtle">
-            Our mission
+            Our Mission
           </p>
           <h2 className="mt-3 text-2xl font-semibold tracking-tight text-text sm:text-3xl">
-            Make a high-quality skill upgrade accessible to anyone with an
-            internet connection and an afternoon.
+            Ensure every factory operator has the verified knowledge to work safely and productively.
           </h2>
           <p className="mt-5 leading-relaxed text-text-muted">
-            We don&apos;t believe in the &ldquo;course library you&apos;ll
-            never finish&rdquo; model. Every Lumen course is small enough to
-            complete in days, structured enough to build something real, and
-            backed by a community of mentors who have shipped the work
-            themselves.
-          </p>
-          <p className="mt-4 leading-relaxed text-text-muted">
-            We&apos;re a small, distributed team of engineers, designers and
-            educators who use the platform we build — for our own learning,
-            for our own teams, and for the cohorts we run with friends.
+            Internal industrial training demands precision, accountability, and traceability.
+            Opervanta transforms fragmented safety binders and spreadsheets into an integrated digital
+            training platform with verifiable qualification standards.
           </p>
         </section>
 
@@ -156,10 +149,10 @@ export default function AboutPage() {
         <section className="border-y border-border bg-bg-muted/40">
           <div className="mx-auto max-w-5xl px-6 py-20">
             <p className="text-xs font-semibold uppercase tracking-[0.16em] text-text-subtle">
-              What makes Lumen different
+              Core Pillars
             </p>
             <h2 className="mt-3 text-2xl font-semibold tracking-tight text-text sm:text-3xl">
-              Four product pillars we won&apos;t compromise on.
+              Engineered for manufacturing compliance and operations.
             </h2>
 
             <ul className="mt-10 grid gap-6 sm:grid-cols-2">
@@ -186,10 +179,10 @@ export default function AboutPage() {
         {/* Principles ------------------------------------------------ */}
         <section className="mx-auto max-w-3xl px-6 py-20">
           <p className="text-xs font-semibold uppercase tracking-[0.16em] text-text-subtle">
-            How we build
+            Operating Principles
           </p>
           <h2 className="mt-3 text-2xl font-semibold tracking-tight text-text sm:text-3xl">
-            Four principles you can hold us to.
+            Four commitments to factory operations.
           </h2>
           <ol className="mt-8 space-y-6">
             {PRINCIPLES.map((principle, index) => (
@@ -214,11 +207,10 @@ export default function AboutPage() {
         <section className="border-t border-border bg-linear-to-br from-primary via-primary-hover to-info text-white">
           <div className="mx-auto max-w-3xl px-6 py-16 text-center">
             <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">
-              Ready to build something this weekend?
+              Ready to standardize plant workforce training?
             </h2>
             <p className="mt-3 leading-relaxed text-white/85">
-              Browse the catalog, pick a course that ships in a single
-              afternoon, and start where you are.
+              Access role-based qualifications, SOP modules, and safety assessments.
             </p>
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <Link to={ROUTES.catalog}>
@@ -227,7 +219,7 @@ export default function AboutPage() {
                   variant="secondary"
                   rightIcon={<Icon name="ArrowRight" size={18} />}
                 >
-                  Browse courses
+                  Training catalog
                 </Button>
               </Link>
               <Link to={ROUTES.register}>
@@ -236,7 +228,7 @@ export default function AboutPage() {
                   variant="ghost"
                   className="text-white hover:bg-white/10"
                 >
-                  Create a free account
+                  Workforce access
                 </Button>
               </Link>
             </div>

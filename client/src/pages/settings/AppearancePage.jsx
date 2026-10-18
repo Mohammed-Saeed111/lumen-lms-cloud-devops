@@ -56,7 +56,7 @@ export default function SettingsAppearancePage() {
         <div>
           <h2 className="text-lg font-semibold text-text">Appearance</h2>
           <p className="text-sm text-text-muted mt-0.5">
-            Customise how Lumen looks and feels. Changes apply instantly.
+            Customise how Opervanta looks and feels. Changes apply instantly.
           </p>
         </div>
         <AutoSaveIndicator status={status} />

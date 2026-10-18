@@ -20,62 +20,62 @@ import { ROUTES } from '../../utils/constants.js';
 
 const VALUE_PROPS = [
   {
-    icon: 'CircleDollarSign',
-    title: 'Keep most of what you earn',
-    body: 'Instructors take home up to 85% of net revenue from their courses. Payouts go out twice a month with itemised statements.',
+    icon: 'ShieldCheck',
+    title: 'Standard Operating Procedures & Curriculum',
+    body: 'Build step-by-step SOP modules, video walkthroughs, and safety assessments tailored to plant machinery and line operations.',
   },
   {
     icon: 'Users',
-    title: 'Reach motivated learners',
-    body: 'A curated catalog means your course is discovered by people actively looking for it — not buried under 30,000 lookalikes.',
+    title: 'Role-Based Workforce Qualification',
+    body: 'Ensure factory technicians, machine operators, and maintenance personnel achieve verified competency before independent operation.',
   },
   {
-    icon: 'Sparkles',
-    title: 'Production tooling, not paperwork',
-    body: 'Drag-and-drop curriculum builder, video uploads with adaptive streaming, quiz authoring, certificates, and analytics — all in the box.',
+    icon: 'ClipboardCheck',
+    title: 'Safety Documentation & Records',
+    body: 'Assessment gates, safety acknowledgments, and structured training records to support internal plant safety guidelines.',
   },
   {
-    icon: 'LifeBuoy',
-    title: 'Editor support before launch',
-    body: 'Every course goes through a friendly review with our learning team — outline feedback, lesson length suggestions, and a final QA pass before it ships.',
+    icon: 'TrendingUp',
+    title: 'Department Progress Tracking',
+    body: 'Shift supervisors and plant management monitor qualification milestones, quiz attempts, and completion metrics in real time.',
   },
 ];
 
 const STEPS = [
   {
-    title: 'Pitch your course idea',
-    body: 'Tell us what you want to teach, who it\u2019s for and what learners will build by the end. We respond within five business days with feedback or an invitation to apply.',
+    title: 'Outline training standard',
+    body: 'Define learning objectives, required safety notices, PPE requirements, and SOP documentation references.',
   },
   {
-    title: 'Build with our toolkit',
-    body: 'Use the curriculum builder to outline modules, upload your videos and attach resources. Draft as long as you need — nothing goes live until you publish.',
+    title: 'Author curriculum & media',
+    body: 'Upload procedural video walkthroughs, attach standard operating documentation, and create knowledge assessments.',
   },
   {
-    title: 'Review & launch',
-    body: 'Submit for editorial review. We give you actionable notes within seven days, and once you\u2019re ready, we coordinate the launch announcement to relevant cohorts.',
+    title: 'Safety & supervisory review',
+    body: 'Review modules with plant EHS coordinators and department leads to ensure full procedural accuracy.',
   },
   {
-    title: 'Earn, iterate, grow',
-    body: 'Track enrollments, completion and earnings in your dashboard. Update lessons as the field evolves — learners keep up to date automatically.',
+    title: 'Publish & certify workforce',
+    body: 'Release modules to the plant workforce, track operator progress, and verify competency certificates.',
   },
 ];
 
 const FAQ = [
   {
-    q: 'Do I need to be a professional educator?',
-    a: 'No. Most of our top instructors are practitioners — engineers, designers, founders — teaching the things they ship at work. Our editorial team helps with pacing and structure so you can focus on substance.',
+    q: 'Who can author courses in Opervanta?',
+    a: 'Plant supervisors, certified technical trainers, EHS safety officers, and manufacturing engineers designated with instructor permissions.',
   },
   {
-    q: 'What kind of courses perform best?',
-    a: 'Project-based courses that end with a tangible deliverable (a deployed app, a portfolio piece, a working API) consistently outperform open-ended content libraries. Aim for 2 to 6 hours of focused video — most of our top sellers sit in that range.',
+    q: 'What training formats are supported?',
+    a: 'Step-by-step video procedures, text SOPs, PDF reference guides, and rigorous multiple-choice safety knowledge assessments.',
   },
   {
-    q: 'How do payouts work?',
-    a: 'You configure a payout method in instructor settings (Stripe Connect today, with PayPal coming soon). We pay out the 1st and 16th of each month, with a transparent statement covering enrollments, refunds and platform fees.',
+    q: 'How are employee completions tracked?',
+    a: 'Every lesson completed and quiz attempt is recorded with timestamps, progress percent, and passing status for workforce qualification tracking.',
   },
   {
-    q: 'What about exclusivity?',
-    a: 'Lumen LMS does not require exclusivity. You can publish the same content elsewhere; we just ask that you keep the Lumen edition feature-complete (no deliberately watered-down versions).',
+    q: 'Can courses be assigned to specific roles?',
+    a: 'Yes. Training administrators can designate modules for specific operational roles, technical levels, and plant departments.',
   },
 ];
 
@@ -88,15 +88,15 @@ export default function BecomeInstructorPage() {
     : `${ROUTES.register}?next=${encodeURIComponent(ROUTES.teach)}`;
   const ctaLabel = isAuthenticated
     ? isInstructor || isAdmin
-      ? 'Open instructor dashboard'
-      : 'Apply from your dashboard'
-    : 'Apply to teach';
+      ? 'Open trainer dashboard'
+      : 'Access workforce portal'
+    : 'Sign in to portal';
 
   return (
     <>
       <Seo
-        title="Teach on Lumen LMS"
-        description="Share your expertise, reach motivated learners worldwide and earn from your courses. Join the Lumen LMS instructor program."
+        title="Trainer Portal — Opervanta"
+        description="Technical instructor and supervisor portal on Opervanta. Author standard operating procedures, assess workforce competency, and maintain plant compliance."
         url="/teach"
       />
 
@@ -109,16 +109,14 @@ export default function BecomeInstructorPage() {
           />
           <div className="mx-auto max-w-5xl px-6 py-20 sm:py-28">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-              Teach on Lumen LMS
+              Opervanta Trainer Portal
             </p>
             <h1 className="mt-4 text-4xl font-semibold leading-tight tracking-tight text-text sm:text-5xl">
-              Turn what you ship into a course thousands of learners actually
-              finish.
+              Equip your workforce with verified operational competency.
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-relaxed text-text-muted">
-              Lumen instructors keep up to 85% of revenue, get editorial
-              support, and ship to a curated audience that&apos;s actively
-              looking for what they&apos;re teaching.
+              Author factory SOPs, deliver safety orientations, and verify machinery operation readiness
+              with digital training management.
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -133,7 +131,7 @@ export default function BecomeInstructorPage() {
                   variant="outline"
                   leftIcon={<Icon name="Workflow" size={18} />}
                 >
-                  See how it works
+                  See authoring workflow
                 </Button>
               </a>
             </div>
@@ -144,10 +142,10 @@ export default function BecomeInstructorPage() {
         <section className="border-b border-border">
           <div className="mx-auto max-w-5xl px-6 py-20">
             <p className="text-xs font-semibold uppercase tracking-[0.16em] text-text-subtle">
-              Why teach with us
+              Industrial Instruction
             </p>
             <h2 className="mt-3 text-2xl font-semibold tracking-tight text-text sm:text-3xl">
-              Built for instructors who want to ship — not wrangle a CMS.
+              Engineered for shop-floor standard operating procedures.
             </h2>
 
             <ul className="mt-10 grid gap-6 sm:grid-cols-2">
@@ -178,10 +176,10 @@ export default function BecomeInstructorPage() {
         >
           <div className="mx-auto max-w-3xl px-6 py-20">
             <p className="text-xs font-semibold uppercase tracking-[0.16em] text-text-subtle">
-              How it works
+              Authoring Workflow
             </p>
             <h2 className="mt-3 text-2xl font-semibold tracking-tight text-text sm:text-3xl">
-              From pitch to first payout in four steps.
+              From procedure draft to certified workforce in four steps.
             </h2>
 
             <ol className="mt-10 space-y-6">
@@ -205,67 +203,64 @@ export default function BecomeInstructorPage() {
           </div>
         </section>
 
-        {/* Earnings hint --------------------------------------------- */}
+        {/* Compliance tracking preview ------------------------------- */}
         <section className="border-b border-border">
           <div className="mx-auto grid max-w-5xl items-center gap-10 px-6 py-20 lg:grid-cols-2">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.16em] text-text-subtle">
-                Earnings, plain and simple
+                Workforce Accountability
               </p>
               <h2 className="mt-3 text-2xl font-semibold tracking-tight text-text sm:text-3xl">
-                You keep up to 85% of net revenue.
+                Real-time qualification visibility across shifts.
               </h2>
               <p className="mt-4 leading-relaxed text-text-muted">
-                Net revenue is what reaches your account after payment-
-                processor fees and applicable taxes. Lumen takes a flat 15%
-                platform share — no opaque promotional discounts that quietly
-                eat into your cut.
+                Track compliance metrics by department, monitor assessment pass rates, and verify that every
+                front-line worker has mastered prerequisite SOPs before production line authorization.
               </p>
               <ul className="mt-6 space-y-3 text-sm text-text-muted">
                 <li className="flex items-start gap-2.5">
                   <Icon name="Check" size={16} className="mt-0.5 text-success" />
-                  Twice-monthly payouts via Stripe Connect
+                  Structured tracking of plant safety and operational procedures
                 </li>
                 <li className="flex items-start gap-2.5">
                   <Icon name="Check" size={16} className="mt-0.5 text-success" />
-                  Itemised statements with refunds &amp; chargebacks broken out
+                  Automated certificate generation with unique verification IDs
                 </li>
                 <li className="flex items-start gap-2.5">
                   <Icon name="Check" size={16} className="mt-0.5 text-success" />
-                  No cross-promotion clauses or forced discounts
+                  Protected compliance history and non-deletable qualification audit trails
                 </li>
               </ul>
             </div>
 
             <div className="rounded-2xl border border-border bg-bg-muted/40 p-8">
               <p className="text-xs font-semibold uppercase tracking-[0.16em] text-text-subtle">
-                Sample monthly payout
+                Facility Qualification Status
               </p>
               <dl className="mt-6 space-y-3 text-sm">
                 <div className="flex justify-between border-b border-border pb-3">
-                  <dt className="text-text-muted">Enrollments (120 × $29)</dt>
-                  <dd className="font-medium text-text">$3,480</dd>
+                  <dt className="text-text-muted">Safety &amp; EHS Mandatory</dt>
+                  <dd className="font-semibold text-success">98.4% Compliant</dd>
                 </div>
                 <div className="flex justify-between border-b border-border pb-3">
-                  <dt className="text-text-muted">Refunds (3)</dt>
-                  <dd className="font-medium text-text">- $87</dd>
+                  <dt className="text-text-muted">Machinery &amp; CNC Operations</dt>
+                  <dd className="font-semibold text-text">91.2% Qualified</dd>
                 </div>
                 <div className="flex justify-between border-b border-border pb-3">
-                  <dt className="text-text-muted">Processor fees</dt>
-                  <dd className="font-medium text-text">- $108</dd>
+                  <dt className="text-text-muted">Assembly &amp; Line SOPs</dt>
+                  <dd className="font-semibold text-text">94.8% Qualified</dd>
                 </div>
                 <div className="flex justify-between border-b border-border pb-3">
-                  <dt className="text-text-muted">Platform fee (15%)</dt>
-                  <dd className="font-medium text-text">- $493</dd>
+                  <dt className="text-text-muted">Active Workers Enrolled</dt>
+                  <dd className="font-medium text-text">148 Operators</dd>
                 </div>
                 <div className="flex justify-between pt-2 text-base">
-                  <dt className="font-semibold text-text">You receive</dt>
-                  <dd className="font-semibold text-success">$2,792</dd>
+                  <dt className="font-semibold text-text">Overall Plant Readiness</dt>
+                  <dd className="font-semibold text-success">95.6%</dd>
                 </div>
               </dl>
               <p className="mt-4 text-xs text-text-subtle">
-                Illustrative only — your numbers depend on price, volume and
-                applicable taxes.
+                Audit metrics reflect live assessment records and completed SOP qualifications.
               </p>
             </div>
           </div>
@@ -278,7 +273,7 @@ export default function BecomeInstructorPage() {
               Frequently asked
             </p>
             <h2 className="mt-3 text-2xl font-semibold tracking-tight text-text sm:text-3xl">
-              The questions instructors ask before applying.
+              Questions from technical trainers and supervisors.
             </h2>
 
             <dl className="mt-10 space-y-6">
@@ -303,11 +298,10 @@ export default function BecomeInstructorPage() {
         <section className="bg-linear-to-br from-primary via-primary-hover to-info text-white">
           <div className="mx-auto max-w-3xl px-6 py-16 text-center">
             <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">
-              Ready to teach what you ship?
+              Ready to author factory training standards?
             </h2>
             <p className="mt-3 leading-relaxed text-white/85">
-              The application takes about ten minutes. We respond within
-              five business days.
+              Access the authoring suite to build, manage, and assign technical training.
             </p>
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <Link to={ctaTarget}>
@@ -319,14 +313,14 @@ export default function BecomeInstructorPage() {
                   {ctaLabel}
                 </Button>
               </Link>
-              <a href="mailto:hello@lumen.lms?subject=Instructor%20application">
+              <a href="mailto:support@opervanta.com?subject=Trainer%20Portal%20Inquiry">
                 <Button
                   size="lg"
                   variant="ghost"
                   className="text-white hover:bg-white/10"
                   leftIcon={<Icon name="Mail" size={18} />}
                 >
-                  Email the team
+                  Contact training lead
                 </Button>
               </a>
             </div>

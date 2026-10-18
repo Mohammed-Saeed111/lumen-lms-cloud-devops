@@ -46,7 +46,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { CourseCard, CourseCardSkeleton } from '../../components/course/index.js';
 import { Seo } from '../../components/seo/index.js';
 import {
   Avatar,
@@ -65,19 +64,13 @@ import {
 import { useAuth } from '../../context/useAuth.js';
 import { useDebounce } from '../../hooks/useDebounce.js';
 import { useDocumentTitle } from '../../hooks/useDocumentTitle.js';
-import { listCourses } from '../../services/course.service.js';
-import {
-  getMyEnrollments,
-  unenroll as unenrollCourse,
-} from '../../services/enrollment.service.js';
+import { getMyEnrollments } from '../../services/enrollment.service.js';
 import { requestCertificate } from '../../services/progress.service.js';
 import { ROUTES } from '../../utils/constants.js';
 import { generateCertificatePdf } from '../../utils/certificate.js';
 import { cn } from '../../utils/cn.js';
 
 const ENROLLMENT_FETCH_LIMIT = 50;
-const RECOMMENDED_FETCH_LIMIT = 8;
-const RECOMMENDED_DISPLAY_LIMIT = 4;
 const SEARCH_DEBOUNCE_MS = 250;
 
 const dateFormatter = new Intl.DateTimeFormat('en-US', {
@@ -133,7 +126,7 @@ const PROGRESS_BADGE = (enrollment) => {
 
 function ContinueLearningCard({ enrollment }) {
   const course = enrollment.courseId ?? {};
-  const instructorName = course.instructor?.name ?? 'Lumen Instructor';
+  const instructorName = course.instructor?.name ?? 'Opervanta Instructor';
   const thumbnailUrl =
     typeof course.thumbnail === 'string' ? course.thumbnail : course.thumbnail?.url;
   const percent = Math.round(enrollment.progressPercent ?? 0);
@@ -142,7 +135,7 @@ function ContinueLearningCard({ enrollment }) {
 
   return (
     <article
-      className="group flex h-full w-72 shrink-0 snap-start flex-col overflow-hidden rounded-2xl
+      className="group flex h-full w-72 shrink-0 snap-start flex-col overflow-hidden rounded-xl
         border border-border bg-bg shadow-xs transition-all duration-200 ease-out
         hover:-translate-y-0.5 hover:shadow-md hover:border-border-strong sm:w-80"
     >
@@ -153,16 +146,16 @@ function ContinueLearningCard({ enrollment }) {
             alt=""
             loading="lazy"
             decoding="async"
-            className="h-full w-full object-cover transition-transform duration-500 ease-out
-              group-hover:scale-[1.04]"
+            className="h-full w-full object-cover transition-transform duration-300 ease-out
+              group-hover:scale-[1.02]"
           />
         ) : (
           <div
             aria-hidden="true"
             className="absolute inset-0 flex items-center justify-center bg-linear-to-br
-              from-primary/30 via-info/15 to-bg-muted text-primary/70"
+              from-primary/20 via-slate-700/10 to-bg-muted text-primary/70"
           >
-            <Icon name="GraduationCap" size={36} />
+            <Icon name="Factory" size={36} />
           </div>
         )}
         <div className="absolute inset-x-0 bottom-0 p-2">
@@ -211,7 +204,7 @@ function CompletedCourseCard({ enrollment, onDownload, downloading }) {
 
   return (
     <article
-      className="flex h-full flex-col overflow-hidden rounded-2xl border border-border
+      className="flex h-full flex-col overflow-hidden rounded-xl border border-border
         bg-bg shadow-xs"
     >
       <div className="relative aspect-video overflow-hidden bg-bg-muted">
@@ -227,9 +220,9 @@ function CompletedCourseCard({ enrollment, onDownload, downloading }) {
           <div
             aria-hidden="true"
             className="absolute inset-0 flex items-center justify-center bg-linear-to-br
-              from-success/25 via-primary/15 to-bg-muted text-success/80"
+              from-success/20 via-primary/10 to-bg-muted text-success/80"
           >
-            <Icon name="GraduationCap" size={36} />
+            <Icon name="ShieldCheck" size={36} />
           </div>
         )}
         <Badge
@@ -358,7 +351,6 @@ function EnrollmentsTable({
   onSearchChange,
   sort,
   onSortChange,
-  onUnenroll,
   onDownloadCertificate,
   downloadingId,
 }) {
@@ -544,14 +536,6 @@ function EnrollmentsTable({
                                   },
                                 ]
                               : []),
-                            { id: 'sep', separator: true },
-                            {
-                              id: 'unenroll',
-                              label: 'Unenroll',
-                              icon: 'Trash2',
-                              danger: true,
-                              onSelect: () => onUnenroll(enrollment),
-                            },
                           ]}
                         />
                       </div>
@@ -603,9 +587,6 @@ export default function StudentDashboardPage() {
   const [enrollmentsStatus, setEnrollmentsStatus] = useState('loading');
   const [enrollmentsError, setEnrollmentsError] = useState(null);
 
-  const [recommended, setRecommended] = useState([]);
-  const [recommendedStatus, setRecommendedStatus] = useState('loading');
-
   const [tableSearch, setTableSearch] = useState('');
   const debouncedSearch = useDebounce(tableSearch, SEARCH_DEBOUNCE_MS);
   const [tableSort, setTableSort] = useState({
@@ -637,29 +618,9 @@ export default function StudentDashboardPage() {
     }
   }, []);
 
-  const fetchRecommended = useCallback(async () => {
-    setRecommendedStatus('loading');
-    try {
-      const payload = await listCourses({
-        sort: 'popular',
-        page: 1,
-        limit: RECOMMENDED_FETCH_LIMIT,
-      });
-      const items = payload?.data?.items ?? payload?.items ?? [];
-      setRecommended(items);
-      setRecommendedStatus('ready');
-    } catch {
-      // Recommended is supplementary content — failing silently is OK; the
-      // section just hides itself rather than breaking the whole dashboard.
-      setRecommended([]);
-      setRecommendedStatus('error');
-    }
-  }, []);
-
   useEffect(() => {
     fetchEnrollments();
-    fetchRecommended();
-  }, [fetchEnrollments, fetchRecommended]);
+  }, [fetchEnrollments]);
 
   /* ----------------------------- derived sets ----------------------------- */
 
@@ -680,18 +641,6 @@ export default function StudentDashboardPage() {
     [enrollments],
   );
 
-  const enrolledCourseIds = useMemo(
-    () => new Set(enrollments.map((entry) => String(entry.courseId?._id ?? ''))),
-    [enrollments],
-  );
-
-  const recommendedFiltered = useMemo(
-    () =>
-      recommended
-        .filter((course) => !enrolledCourseIds.has(String(course._id)))
-        .slice(0, RECOMMENDED_DISPLAY_LIMIT),
-    [recommended, enrolledCourseIds],
-  );
 
   const stats = useMemo(() => {
     const total = enrollments.length;
@@ -752,34 +701,6 @@ export default function StudentDashboardPage() {
       }
     },
     [user?.name],
-  );
-
-  const handleUnenroll = useCallback(
-    async (enrollment) => {
-      const courseId = enrollment.courseId?._id ?? enrollment.courseId?.id;
-      const courseTitle = enrollment.courseId?.title ?? 'this course';
-      if (!courseId) return;
-
-      const confirmed = window.confirm(
-        `Unenroll from "${courseTitle}"? Your progress and quiz attempts for this course will be removed.`,
-      );
-      if (!confirmed) return;
-
-      try {
-        await unenrollCourse(courseId);
-        toast.success(`Unenrolled from ${courseTitle}.`);
-        setEnrollments((prev) =>
-          prev.filter(
-            (entry) => (entry._id ?? entry.id) !== (enrollment._id ?? enrollment.id),
-          ),
-        );
-      } catch (error) {
-        toast.error(
-          error?.response?.data?.message ?? 'Could not unenroll. Please try again.',
-        );
-      }
-    },
-    [],
   );
 
   const handleSortChange = useCallback((columnId) => {
@@ -884,7 +805,7 @@ export default function StudentDashboardPage() {
 
       {/* Empty state — only when the user has zero enrollments. ------------- */}
       {hasNoEnrollments && (
-        <section className="rounded-3xl border border-dashed border-border bg-bg-subtle">
+        <section className="rounded-xl border border-dashed border-border bg-bg-subtle">
           <EmptyState
             size="lg"
             icon="Shield"
@@ -955,45 +876,6 @@ export default function StudentDashboardPage() {
         </section>
       )}
 
-      {/* Recommended -------------------------------------------------------- */}
-      {!hasError && recommendedFiltered.length > 0 && (
-        <section aria-labelledby="recommended-heading" className="space-y-4">
-          <div className="flex items-end justify-between gap-4">
-            <div>
-              <h2
-                id="recommended-heading"
-                className="text-xl font-semibold text-text"
-              >
-                Recommended for you
-              </h2>
-              <p className="text-sm text-text-muted">
-                Trending courses picked from across the Lumen catalog.
-              </p>
-            </div>
-            <Link
-              to={ROUTES.catalog}
-              className="hidden text-sm font-medium text-primary hover:underline sm:inline-flex"
-            >
-              View all →
-            </Link>
-          </div>
-
-          {recommendedStatus === 'loading' ? (
-            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-              {Array.from({ length: 4 }).map((_, index) => (
-                <CourseCardSkeleton key={index} />
-              ))}
-            </div>
-          ) : (
-            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-              {recommendedFiltered.map((course) => (
-                <CourseCard key={course._id ?? course.id} course={course} />
-              ))}
-            </div>
-          )}
-        </section>
-      )}
-
       {/* Completed ---------------------------------------------------------- */}
       {!hasNoEnrollments && enrollmentsStatus === 'ready' && completed.length > 0 && (
         <section aria-labelledby="completed-heading" className="space-y-4">
@@ -1038,7 +920,6 @@ export default function StudentDashboardPage() {
               onSearchChange={setTableSearch}
               sort={tableSort}
               onSortChange={handleSortChange}
-              onUnenroll={handleUnenroll}
               onDownloadCertificate={handleDownloadCertificate}
               downloadingId={downloadingCertId}
             />

@@ -14,26 +14,26 @@ import { ROUTES } from '../../utils/constants.js';
 
 const COLUMNS = [
   {
-    heading: 'Product',
+    heading: 'Workforce Training',
     links: [
-      { to: ROUTES.catalog, label: 'Browse courses' },
-      { to: ROUTES.teach, label: 'Become an instructor' },
-      { to: ROUTES.dashboard, label: 'My learning' },
+      { to: ROUTES.catalog, label: 'Training Programs' },
+      { to: ROUTES.teach, label: 'Trainer Portal' },
+      { to: ROUTES.dashboard, label: 'Worker Qualifications' },
     ],
   },
   {
-    heading: 'Company',
+    heading: 'Operations',
     links: [
-      { to: ROUTES.about, label: 'About' },
-      { to: ROUTES.teach, label: 'For teaching' },
-      { to: 'mailto:hello@lumen.lms', label: 'Contact', external: true },
+      { to: ROUTES.about, label: 'About System' },
+      { to: ROUTES.teach, label: 'SOP Authoring' },
+      { to: 'mailto:support@factory.local', label: 'EHS Support', external: true },
     ],
   },
   {
-    heading: 'Legal',
+    heading: 'Compliance',
     links: [
-      { to: ROUTES.terms, label: 'Terms of Service' },
-      { to: ROUTES.privacy, label: 'Privacy Policy' },
+      { to: ROUTES.terms, label: 'Operating Terms' },
+      { to: ROUTES.privacy, label: 'Data & Privacy' },
     ],
   },
 ];
@@ -54,14 +54,14 @@ export function Footer() {
     >
       <div
         aria-hidden="true"
-        className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-primary/60 to-transparent"
+        className="absolute inset-x-0 top-0 h-px bg-border-strong"
       />
 
       <div className="mx-auto max-w-7xl px-6 py-12 grid gap-10 md:grid-cols-4">
         <div className="space-y-3">
           <Logo />
           <p className="text-sm text-text-muted max-w-xs">
-            Learn anything. Teach anyone. A modern home for online courses.
+            Industrial Workforce Training & Competency Management Platform.
           </p>
         </div>
 
@@ -100,7 +100,7 @@ export function Footer() {
       <div className="border-t border-border">
         <div className="mx-auto max-w-7xl px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-xs text-text-subtle">
-            © {year} Lumen LMS. All rights reserved.
+            © {year} Opervanta. All rights reserved.
           </p>
           <ul className="flex items-center gap-3">
             {SOCIALS.map((social) => (

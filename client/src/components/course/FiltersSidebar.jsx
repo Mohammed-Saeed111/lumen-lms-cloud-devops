@@ -16,22 +16,9 @@
  * upstream so the debounce can stay in one well-known location.
  */
 
-import { Badge, Button, Checkbox, Icon, Input, Slider } from '../ui/index.js';
-import { CATEGORIES, DURATION_BUCKETS, LEVELS, PRICE_LIMITS } from './filterConstants.js';
+import { Badge, Button, Checkbox, Icon, Input } from '../ui/index.js';
+import { CATEGORIES, DURATION_BUCKETS, LEVELS } from './filterConstants.js';
 import { cn } from '../../utils/cn.js';
-
-const PRICE_MODES = [
-  { value: 'all', label: 'All' },
-  { value: 'free', label: 'Free' },
-  { value: 'paid', label: 'Paid' },
-];
-
-const formatCurrency = (value) =>
-  new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    maximumFractionDigits: 0,
-  }).format(Number(value) || 0);
 
 export function FiltersSidebar({
   filters,
@@ -47,14 +34,6 @@ export function FiltersSidebar({
       ? current.filter((entry) => entry !== value)
       : [...current, value];
     onChange({ [key]: next });
-  };
-
-  const setPriceMode = (mode) => {
-    onChange({
-      priceMode: mode,
-      priceMin: PRICE_LIMITS.min,
-      priceMax: PRICE_LIMITS.max,
-    });
   };
 
   const setDurationBucket = (bucketId) => {
@@ -152,57 +131,6 @@ export function FiltersSidebar({
         </div>
       </FilterSection>
 
-      <FilterSection title="Price">
-        <div
-          role="radiogroup"
-          aria-label="Price mode"
-          className="inline-flex w-full rounded-lg border border-border bg-bg-muted p-1"
-        >
-          {PRICE_MODES.map((mode) => {
-            const active = (filters.priceMode ?? 'all') === mode.value;
-            return (
-              <button
-                key={mode.value}
-                type="button"
-                role="radio"
-                aria-checked={active}
-                onClick={() => setPriceMode(mode.value)}
-                className={cn(
-                  'flex-1 rounded-md px-3 py-1.5 text-xs font-medium transition-colors',
-                  active
-                    ? 'bg-bg text-text shadow-xs'
-                    : 'text-text-muted hover:text-text',
-                )}
-              >
-                {mode.label}
-              </button>
-            );
-          })}
-        </div>
-
-        {filters.priceMode !== 'free' && (
-          <div className="mt-4 space-y-2">
-            <div className="flex items-center justify-between text-xs text-text-muted">
-              <span>{formatCurrency(filters.priceMin ?? PRICE_LIMITS.min)}</span>
-              <span>up to {formatCurrency(filters.priceMax ?? PRICE_LIMITS.max)}</span>
-            </div>
-            <Slider
-              min={PRICE_LIMITS.min}
-              max={PRICE_LIMITS.max}
-              step={5}
-              value={filters.priceMax ?? PRICE_LIMITS.max}
-              onChange={(value) =>
-                onChange({
-                  priceMode: filters.priceMode === 'free' ? 'all' : filters.priceMode ?? 'all',
-                  priceMax: value,
-                })
-              }
-              showValue={false}
-              aria-label="Maximum price"
-            />
-          </div>
-        )}
-      </FilterSection>
 
       <FilterSection title="Duration">
         <div className="flex flex-wrap gap-2">

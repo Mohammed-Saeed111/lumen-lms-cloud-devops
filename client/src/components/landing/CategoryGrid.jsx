@@ -27,47 +27,47 @@ import { getCategoryStats } from '../../services/course.service.js';
 
 const CATEGORIES = [
   {
-    id: 'programming',
-    label: 'Programming',
-    icon: 'Code2',
+    id: 'safety-ehs',
+    label: 'Safety & EHS',
+    icon: 'ShieldCheck',
     accent: 'from-primary/15 to-primary/5 text-primary',
   },
   {
-    id: 'design',
-    label: 'Design',
-    icon: 'Palette',
+    id: 'machining-cnc',
+    label: 'Machining & CNC',
+    icon: 'Cpu',
     accent: 'from-info/15 to-info/5 text-info',
   },
   {
-    id: 'business',
-    label: 'Business',
-    icon: 'Briefcase',
+    id: 'assembly-operations',
+    label: 'Assembly & Line',
+    icon: 'Layers',
     accent: 'from-warning/15 to-warning/5 text-warning',
   },
   {
-    id: 'marketing',
-    label: 'Marketing',
-    icon: 'Megaphone',
+    id: 'maintenance-repairs',
+    label: 'Maintenance',
+    icon: 'Wrench',
     accent: 'from-success/15 to-success/5 text-success',
   },
   {
-    id: 'data-science',
-    label: 'Data Science',
-    icon: 'LineChart',
+    id: 'quality-control',
+    label: 'Quality Control',
+    icon: 'CheckCircle',
     accent: 'from-primary/15 to-primary/5 text-primary',
   },
   {
-    id: 'language',
-    label: 'Language',
-    icon: 'Languages',
+    id: 'operating-procedures',
+    label: 'Standard SOPs',
+    icon: 'FileText',
     accent: 'from-info/15 to-info/5 text-info',
   },
 ];
 
 const formatCountLabel = (count) => {
-  if (count === null || count === undefined) return '— courses';
-  if (count === 1) return '1 course';
-  return `${count} courses`;
+  if (count === null || count === undefined) return '— modules';
+  if (count === 1) return '1 module';
+  return `${count} modules`;
 };
 
 export function CategoryGrid() {
@@ -85,7 +85,7 @@ export function CategoryGrid() {
         );
         setCounts(map);
       } catch {
-        // Silent fallback — the UI degrades to a neutral "— courses"
+        // Silent fallback — the UI degrades to a neutral "— modules"
         // label instead of crashing the marketing page over a single
         // analytics request.
         if (!cancelled) setCounts({});
@@ -108,10 +108,10 @@ export function CategoryGrid() {
             id="categories-heading"
             className="text-2xl sm:text-3xl font-semibold tracking-tight text-text"
           >
-            Browse by category
+            Workforce Training Domains
           </h2>
           <p className="mt-2 text-text-muted">
-            Find the right path — every topic is taught by working professionals.
+            Standard operating procedures, safety certifications, and technical machinery operations.
           </p>
         </div>
         <Link
@@ -119,7 +119,7 @@ export function CategoryGrid() {
           className="hidden sm:inline-flex items-center gap-1 text-sm font-medium
             text-primary hover:text-primary-hover transition-colors"
         >
-          All categories
+          All domains
           <Icon name="ArrowRight" size={16} />
         </Link>
       </Reveal>

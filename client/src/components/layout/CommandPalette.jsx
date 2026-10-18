@@ -76,18 +76,18 @@ export function CommandPalette() {
       },
       {
         id: 'go-catalog',
-        label: 'Browse courses',
+        label: 'Training programs',
         icon: 'BookOpen',
         group: 'Navigate',
-        keywords: ['catalog', 'search'],
+        keywords: ['catalog', 'search', 'training'],
         onSelect: () => navigate(ROUTES.catalog),
       },
       {
         id: 'go-teach',
-        label: 'For instructors',
-        icon: 'GraduationCap',
+        label: 'Trainer portal',
+        icon: 'UserCheck',
         group: 'Navigate',
-        keywords: ['teach', 'become'],
+        keywords: ['teach', 'trainer', 'supervisor'],
         onSelect: () => navigate(ROUTES.teach),
       },
     ];
@@ -96,10 +96,10 @@ export function CommandPalette() {
       list.push(
         {
           id: 'go-dashboard',
-          label: 'My learning',
+          label: 'Worker training portal',
           icon: 'LayoutDashboard',
           group: 'Navigate',
-          keywords: ['dashboard', 'enrollments'],
+          keywords: ['dashboard', 'training', 'worker'],
           onSelect: () => navigate(ROUTES.dashboard),
         },
         {

@@ -19,7 +19,7 @@
 
 import { useEffect, useLayoutEffect } from 'react';
 
-const APP_NAME = import.meta.env.VITE_APP_NAME || 'Lumen LMS';
+const APP_NAME = import.meta.env.VITE_APP_NAME || 'Opervanta';
 
 // `useLayoutEffect` warns when called during SSR (no DOM); fall back to
 // `useEffect` in that environment so the warning never reaches users.

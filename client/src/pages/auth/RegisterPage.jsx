@@ -248,7 +248,7 @@ export default function RegisterPage() {
       // The shared welcome toast is intentional even though the modal
       // also greets the user — it acknowledges the form submit
       // independently of the modal that mounts on top.
-      toast.success('Welcome to Lumen LMS!');
+      toast.success('Welcome to Opervanta!');
       const firstName = values.name.trim().split(/\s+/)[0] ?? '';
       setOnboarding({ open: true, firstName });
     } catch (err) {
@@ -266,7 +266,7 @@ export default function RegisterPage() {
     <>
     <AuthShell
       title="Create your account"
-      subtitle="Free forever for learners. No credit card required."
+      subtitle="Internal workforce training and competency qualification portal."
       footerLink={
         <>
           Already have an account?{' '}

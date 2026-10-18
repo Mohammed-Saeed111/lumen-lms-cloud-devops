@@ -14,19 +14,10 @@
 import { Badge, Button, Icon } from '../ui/index.js';
 import {
   CATEGORY_LABELS,
-  DEFAULT_PRICE_MODE,
   DURATION_LABELS,
   LEVEL_LABELS,
-  PRICE_LIMITS,
 } from './filterConstants.js';
 import { cn } from '../../utils/cn.js';
-
-const formatCurrency = (value) =>
-  new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    maximumFractionDigits: 0,
-  }).format(Number(value) || 0);
 
 export function ActiveFilterChips({ filters, search, onRemove, onReset, className }) {
   const chips = buildChipList({ filters, search });
@@ -108,25 +99,7 @@ const buildChipList = ({ filters, search }) => {
     });
   }
 
-  if (filters.priceMode && filters.priceMode !== DEFAULT_PRICE_MODE) {
-    chips.push({
-      id: 'priceMode',
-      label: filters.priceMode === 'free' ? 'Free only' : 'Paid only',
-      patch: { priceMode: DEFAULT_PRICE_MODE },
-    });
-  }
 
-  if (
-    typeof filters.priceMax === 'number' &&
-    filters.priceMax < PRICE_LIMITS.max &&
-    filters.priceMode !== 'free'
-  ) {
-    chips.push({
-      id: 'priceMax',
-      label: `Under ${formatCurrency(filters.priceMax)}`,
-      patch: { priceMax: PRICE_LIMITS.max },
-    });
-  }
 
   if (filters.duration) {
     chips.push({

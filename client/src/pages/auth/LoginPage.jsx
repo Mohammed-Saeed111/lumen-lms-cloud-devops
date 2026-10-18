@@ -115,10 +115,10 @@ export default function LoginPage() {
   return (
     <AuthShell
       title="Welcome back"
-      subtitle="Sign in to continue learning where you left off."
+      subtitle="Sign in to continue your workforce training and qualification modules."
       footerLink={
         <>
-          New to Lumen LMS?{' '}
+          New to Opervanta?{' '}
           <Link
             to={ROUTES.register}
             className="font-medium text-primary hover:underline underline-offset-4"

@@ -72,10 +72,10 @@ export function FeaturedCourses() {
               id="featured-heading"
               className="text-2xl sm:text-3xl font-semibold tracking-tight text-text"
             >
-              Trending this week
+              Featured Training Modules
             </h2>
             <p className="mt-2 text-text-muted">
-              Popular picks chosen by your fellow learners.
+              Core workforce qualification programs and standard procedures.
             </p>
           </div>
           <Link
@@ -83,13 +83,13 @@ export function FeaturedCourses() {
             className="hidden sm:inline-flex items-center gap-1 text-sm font-medium
               text-primary hover:text-primary-hover transition-colors"
           >
-            View all
+            View catalog
             <Icon name="ArrowRight" size={16} />
           </Link>
         </Reveal>
 
         {state.status === 'error' && (
-          <Alert variant="warning" title="Couldn't load trending courses">
+          <Alert variant="warning" title="Couldn't load training modules">
             {state.error}
           </Alert>
         )}

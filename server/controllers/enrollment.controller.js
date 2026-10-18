@@ -54,7 +54,7 @@ const COURSE_CARD_FIELDS = [
  * (`toInt()`), so we only need to supply defaults.
  */
 const buildMyEnrollmentsQuery = (query, userId) => {
-  const filter = { userId };
+  const filter = { userId, status: { $ne: 'revoked' } };
 
   if (query.status === 'completed') {
     filter.completedAt = { $ne: null };
@@ -92,10 +92,30 @@ export const enrollInCourse = asyncHandler(async (req, res) => {
     throw ApiError.badRequest('Instructors cannot enroll in their own course.');
   }
 
+  const existing = await Enrollment.findOne({
+    userId: req.user._id,
+    courseId: course._id,
+  });
+
+  if (existing) {
+    if (existing.status === 'revoked') {
+      // Reactivate previously revoked assignment
+      existing.status = 'active';
+      existing.revokedAt = null;
+      existing.revokedBy = null;
+      existing.enrolledAt = new Date();
+      await existing.save();
+      await Course.updateOne({ _id: course._id }, { $inc: { enrollmentCount: 1 } });
+      return res.status(201).json({ success: true, enrollment: existing });
+    }
+    throw ApiError.conflict('You are already enrolled in this course.');
+  }
+
   try {
     const enrollment = await Enrollment.create({
       userId: req.user._id,
       courseId: course._id,
+      status: 'active',
     });
     return res.status(201).json({ success: true, enrollment });
   } catch (err) {
@@ -155,6 +175,7 @@ export const getEnrollmentForCourse = asyncHandler(async (req, res) => {
   const enrollment = await Enrollment.findOne({
     userId: req.user._id,
     courseId: req.params.id,
+    status: { $ne: 'revoked' },
   });
 
   if (!enrollment) throw ApiError.notFound('You are not enrolled in this course.');
@@ -192,6 +213,7 @@ export const issueCertificate = asyncHandler(async (req, res) => {
   const enrollment = await Enrollment.findOne({
     userId: req.user._id,
     courseId: req.params.id,
+    status: { $ne: 'revoked' },
   }).populate({
     path: 'courseId',
     select: 'title instructor',
@@ -231,28 +253,42 @@ export const issueCertificate = asyncHandler(async (req, res) => {
 /**
  * DELETE /api/courses/:id/enroll
  *
- * Removes the enrollment AND the user's quiz attempts for this course.
- * The schema-level `findOneAndDelete` post-hook decrements
- * `Course.enrollmentCount` so we never touch that counter by hand.
+ * Revokes the active enrollment assignment for the specified user.
  *
- * Quiz attempts are wiped first (rather than after) so that, in the
- * unlikely event the enrollment delete fails, we don't leave attempt
- * rows belonging to a "ghost" enrollment. A failed re-attempt of the
- * unenroll then simply finds nothing left to remove — both operations
- * are idempotent on retry.
+ * Compliance & Training History Guarantee:
+ * - QuizAttempt records are permanently PRESERVED for audit and training evidence.
+ * - Completed lessons and completion history on the Enrollment record are PRESERVED.
+ * - The enrollment status is set to 'revoked', disabling active player/quiz access
+ *   and decrementing Course.enrollmentCount while preserving historical evidence.
  */
 export const unenroll = asyncHandler(async (req, res) => {
+  // Industrial workforce compliance:
+  // Workers and instructors cannot self-unenroll from training assignments or compliance records.
+  // Only administrators can revoke an active enrollment record.
+  if (req.user.role !== 'admin') {
+    throw ApiError.forbidden(
+      'Self-service unenrollment is disabled for workforce compliance. Contact a training administrator.',
+    );
+  }
+
+  const targetUserId = req.query.userId || req.body?.userId || req.user._id;
   const enrollment = await Enrollment.findOne({
-    userId: req.user._id,
+    userId: targetUserId,
     courseId: req.params.id,
+    status: { $ne: 'revoked' },
   });
 
-  if (!enrollment) throw ApiError.notFound('You are not enrolled in this course.');
+  if (!enrollment) throw ApiError.notFound('Active enrollment not found for this course.');
 
-  await QuizAttempt.deleteMany({ userId: req.user._id, courseId: enrollment.courseId });
-  await Enrollment.findOneAndDelete({ _id: enrollment._id });
+  enrollment.status = 'revoked';
+  enrollment.revokedAt = new Date();
+  enrollment.revokedBy = req.user._id;
+  await enrollment.save();
 
-  res.json({ success: true, message: 'Unenrolled successfully.' });
+  // Decrement Course.enrollmentCount for active assignments
+  await Course.updateOne({ _id: enrollment.courseId }, { $inc: { enrollmentCount: -1 } });
+
+  res.json({ success: true, message: 'Unenrolled successfully. Historical training records preserved.' });
 });
 
 export default {

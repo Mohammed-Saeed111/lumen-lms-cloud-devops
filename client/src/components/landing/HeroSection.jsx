@@ -29,9 +29,9 @@ import { durations, ease } from '../../utils/motion.js';
 import { prefetchCatalog } from '../../utils/prefetch.js';
 import { getCategoryStats } from '../../services/course.service.js';
 
-const HEADLINE = 'Master new skills, on your schedule.';
+const HEADLINE = 'Industrial Workforce Training & Operator Qualifications';
 const SUBCOPY =
-  'Project-based courses taught by working professionals — learn by building, not by memorising.';
+  'Standard operating procedures, machine certifications, and workplace safety compliance for factory manufacturing personnel.';
 
 /**
  * Format a count as a compact, honest stat. We deliberately don't
@@ -104,10 +104,10 @@ export function HeroSection() {
           transition={{ duration: durations.slow, ease }}
           className="max-w-2xl"
         >
-          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full
+          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-md
             border border-primary/20 bg-primary/10 text-primary text-xs font-medium">
-            <Icon name="Sparkles" size={14} />
-            New cohort starts every Monday
+            <Icon name="ShieldCheck" size={14} />
+            EHS & Factory Operations Platform
           </span>
 
           <h1
@@ -131,7 +131,7 @@ export function HeroSection() {
               onFocus={() => prefetchCatalog()}
               onTouchStart={() => prefetchCatalog()}
             >
-              Browse courses
+              Training Programs
             </Button>
             <Button
               as={Link}
@@ -139,7 +139,7 @@ export function HeroSection() {
               size="lg"
               variant="outline"
             >
-              Become an instructor
+              Trainer Portal
             </Button>
           </div>
 
@@ -178,10 +178,10 @@ export function HeroSection() {
               )}
               <div>
                 <dt className="text-xl sm:text-2xl font-semibold text-text">
-                  100%
+                  Tracked
                 </dt>
                 <dd className="text-xs text-text-subtle mt-1">
-                  project-based
+                  workforce records
                 </dd>
               </div>
             </dl>
@@ -196,58 +196,53 @@ export function HeroSection() {
 
 const HeroDecoration = () => (
   <motion.div
-    initial={{ opacity: 0, scale: 0.96 }}
+    initial={{ opacity: 0, scale: 0.98 }}
     animate={{ opacity: 1, scale: 1 }}
     transition={{ duration: durations.slow, ease, delay: 0.1 }}
     aria-hidden="true"
     className="relative hidden lg:flex items-center justify-center min-h-[420px]"
   >
     <div
-      className="absolute -top-10 -right-10 h-72 w-72 rounded-full
-        bg-primary/30 blur-3xl animate-blob"
-    />
-    <div
-      className="absolute bottom-0 -left-6 h-56 w-56 rounded-full
-        bg-info/20 blur-3xl animate-blob"
-      style={{ animationDelay: '-4s' }}
+      className="absolute -top-10 -right-10 h-64 w-64 rounded-full
+        bg-primary/10 blur-2xl pointer-events-none"
     />
 
-    <div className="relative w-full max-w-md aspect-4/5 animate-float">
-      <div className="absolute inset-0 rounded-3xl border border-border bg-bg-subtle/80
-        backdrop-blur-sm shadow-lg overflow-hidden">
-        <div className="h-1.5 bg-linear-to-r from-primary via-info to-primary" />
+    <div className="relative w-full max-w-md aspect-4/5">
+      <div className="absolute inset-0 rounded-xl border border-border bg-bg-subtle/95
+        shadow-md overflow-hidden">
+        <div className="h-1 bg-linear-to-r from-primary via-info to-primary" />
 
         <div className="p-6 space-y-5">
           <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-xl bg-primary/15 text-primary
-              flex items-center justify-center">
-              <Icon name="GraduationCap" size={20} />
+            <div className="h-10 w-10 rounded-lg bg-primary/10 text-primary
+              flex items-center justify-center border border-primary/20">
+              <Icon name="ShieldAlert" size={20} />
             </div>
             <div className="flex-1">
               <p className="text-sm font-semibold text-text">
-                Modern React Patterns
+                CNC Machine Safety & LOTO Protocol
               </p>
-              <p className="text-xs text-text-subtle">12 lessons · 3h 40m</p>
+              <p className="text-xs text-text-subtle">SOP-SAF-001 · 5 modules</p>
             </div>
-            <span className="text-xs font-medium text-success">+ 3 today</span>
+            <span className="text-xs font-semibold px-2 py-0.5 rounded bg-success/10 text-success border border-success/20">Active</span>
           </div>
 
           <div>
             <div className="flex items-center justify-between text-xs text-text-muted mb-1.5">
-              <span>Course progress</span>
-              <span className="font-medium text-text">68%</span>
+              <span>Qualification progress</span>
+              <span className="font-semibold text-text">68%</span>
             </div>
             <div className="h-2 rounded-full bg-bg-muted overflow-hidden">
-              <div className="h-full w-[68%] rounded-full bg-linear-to-r from-primary to-info" />
+              <div className="h-full w-[68%] rounded-full bg-primary" />
             </div>
           </div>
 
           <ul className="space-y-2.5">
             {[
-              { icon: 'CheckCircle2', label: 'Hooks & composition', done: true },
-              { icon: 'CheckCircle2', label: 'Suspense in practice', done: true },
-              { icon: 'PlayCircle', label: 'Server components', done: false },
-              { icon: 'Lock', label: 'Project capstone', done: false },
+              { icon: 'CheckCircle2', label: 'Lockout/Tagout (LOTO) verification', done: true },
+              { icon: 'CheckCircle2', label: 'PPE compliance & eye protection check', done: true },
+              { icon: 'PlayCircle', label: 'Emergency shutdown sequence drill', done: false },
+              { icon: 'ShieldAlert', label: 'Practical supervisor sign-off', done: false },
             ].map((row) => (
               <li key={row.label} className="flex items-center gap-3 text-sm">
                 <Icon
@@ -255,28 +250,16 @@ const HeroDecoration = () => (
                   size={18}
                   className={row.done ? 'text-success' : 'text-text-subtle'}
                 />
-                <span className={row.done ? 'text-text' : 'text-text-muted'}>
+                <span className={row.done ? 'text-text font-medium' : 'text-text-muted'}>
                   {row.label}
                 </span>
               </li>
             ))}
           </ul>
 
-          <div className="flex items-center gap-2 pt-3 border-t border-border">
-            <div className="flex -space-x-2">
-              {['#6366f1', '#0ea5e9', '#16a34a'].map((color) => (
-                <span
-                  key={color}
-                  className="h-7 w-7 rounded-full border-2 border-bg-subtle"
-                  style={{ background: color }}
-                />
-              ))}
-            </div>
-            {/* Decorative mock-up card — copy is illustrative only.
-                Marked aria-hidden by the parent so it never reaches AT. */}
-            <span className="text-xs text-text-subtle">
-              Learn alongside a growing community
-            </span>
+          <div className="flex items-center gap-2 pt-3 border-t border-border text-xs text-text-muted">
+            <Icon name="ShieldCheck" size={16} className="text-primary" />
+            <span>Training records &amp; qualification tracking</span>
           </div>
         </div>
       </div>

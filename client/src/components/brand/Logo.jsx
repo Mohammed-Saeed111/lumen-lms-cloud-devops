@@ -1,9 +1,9 @@
 /**
- * Lumen LMS brand logo (inline SVG so consumers can re-color via `currentColor`
+ * Opervanta brand logo (inline SVG so consumers can re-color via `currentColor`
  * or pass an explicit color, and so it scales crisply at any DPI).
  *
  * Variants:
- *  - "wordmark"  → mark + "Lumen LMS" text (default; for navbars, footers).
+ *  - "wordmark"  → mark + "Opervanta" text (default; for navbars, footers).
  *  - "mark"      → square icon only (for compact spaces, favicons-in-app, avatars).
  *
  * Color model:
@@ -23,7 +23,7 @@ export function Logo({
   color = 'currentColor',
   accent = '#ffffff',
   className = '',
-  title = 'Lumen LMS',
+  title = 'Opervanta',
   decorative = false,
   ...rest
 }) {
@@ -50,31 +50,17 @@ export function Logo({
       <path d="M16 6 L24 13 L16 20 L8 13 Z" fill={accent} fillOpacity="0.95" />
       <path d="M16 14 L24 21 L16 28 L8 21 Z" fill={accent} fillOpacity="0.6" />
       {isWordmark && (
-        <>
-          <text
-            x="42"
-            y="22"
-            fontFamily="Inter, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif"
-            fontSize="18"
-            fontWeight="700"
-            letterSpacing="-0.01em"
-            fill={color}
-          >
-            Lumen
-          </text>
-          <text
-            x="105"
-            y="22"
-            fontFamily="Inter, system-ui, sans-serif"
-            fontSize="13"
-            fontWeight="500"
-            letterSpacing="0.12em"
-            fill={color}
-            fillOpacity="0.55"
-          >
-            LMS
-          </text>
-        </>
+        <text
+          x="42"
+          y="22"
+          fontFamily="Inter, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif"
+          fontSize="18"
+          fontWeight="700"
+          letterSpacing="-0.02em"
+          fill={color}
+        >
+          Opervanta
+        </text>
       )}
     </svg>
   );

@@ -49,6 +49,8 @@ import {
   rejectCourse,
   toggleUserActive,
   updateUserRole,
+  updateUserWorkforce,
+  getWorkforceDepartments,
 } from '../controllers/admin.controller.js';
 import { protect } from '../middleware/auth.middleware.js';
 import { adminLimiter } from '../middleware/rateLimit.middleware.js';
@@ -62,6 +64,7 @@ import {
   rejectCourseValidator,
   toggleUserActiveValidator,
   updateUserRoleValidator,
+  updateUserWorkforceValidator,
   userIdParamValidator,
 } from '../validators/admin.validator.js';
 
@@ -75,10 +78,17 @@ router.use(protect, adminOnly, adminLimiter);
 
 router.get('/stats', getDashboardStats);
 
+router.get('/workforce/departments', getWorkforceDepartments);
+
 router.get('/users', validate(listUsersValidator), getAllUsers);
 router.get('/users/:id', validate(userIdParamValidator), getUserById);
 router.patch('/users/:id/role', validate(updateUserRoleValidator), updateUserRole);
 router.patch('/users/:id/active', validate(toggleUserActiveValidator), toggleUserActive);
+router.patch(
+  '/users/:id/workforce',
+  validate(updateUserWorkforceValidator),
+  updateUserWorkforce,
+);
 router.delete('/users/:id', validate(userIdParamValidator), deleteUser);
 
 // `/courses/pending` is the shorthand for the moderation queue. It must be

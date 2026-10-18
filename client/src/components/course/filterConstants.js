@@ -42,8 +42,6 @@ export const DURATION_BUCKETS = Object.freeze([
 export const SORT_OPTIONS = Object.freeze([
   { value: 'popular', label: 'Most popular' },
   { value: 'newest', label: 'Newest' },
-  { value: 'price-asc', label: 'Price: Low to High' },
-  { value: 'price-desc', label: 'Price: High to Low' },
 ]);
 
 export const DEFAULT_SORT = 'popular';

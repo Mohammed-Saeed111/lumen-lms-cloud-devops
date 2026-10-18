@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Static sitemap fallback for Lumen LMS.
+  Static sitemap fallback for Opervanta.
   Lists the evergreen public marketing routes only; the dynamic
   per-course feed is expected to be served from `/api/sitemap.xml`
   by the Express server in production deployments.

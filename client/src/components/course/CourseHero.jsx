@@ -161,7 +161,7 @@ export function CourseHero({ course }) {
               </li>
               <li className="inline-flex items-center gap-1.5">
                 <Icon name="Users" size={14} />
-                <span>{formatEnrolled(course.enrollmentCount)} enrolled</span>
+                <span>{formatEnrolled(course.enrollmentCount)} enrolled workers</span>
               </li>
               {updatedAt && (
                 <li className="inline-flex items-center gap-1.5">
@@ -184,11 +184,11 @@ export function CourseHero({ course }) {
                     to={ROUTES.profile(instructorId)}
                     className="block text-sm font-semibold text-white hover:underline underline-offset-4 truncate"
                   >
-                    {instructor.name ?? 'Lumen Instructor'}
+                    {instructor.name ?? 'Opervanta Instructor'}
                   </Link>
                 ) : (
                   <span className="block text-sm font-semibold text-white truncate">
-                    {instructor.name ?? 'Lumen Instructor'}
+                    {instructor.name ?? 'Opervanta Instructor'}
                   </span>
                 )}
                 {instructor.headline && (

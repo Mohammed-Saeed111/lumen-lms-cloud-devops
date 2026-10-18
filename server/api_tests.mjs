@@ -222,6 +222,36 @@ if (adminToken) {
     body: { isActive: true }
   });
   assert(r4.status === 200, 'Admin re-enables student account', `status=${r4.status}`);
+
+  // Admin updates worker workforce profile
+  const rWf = await req('PATCH', `/admin/users/${studentUserId}/workforce`, {
+    token: adminToken,
+    body: {
+      department: 'Assembly & Production',
+      jobTitle: 'Line Operator',
+      employeeId: 'EMP-001',
+    }
+  });
+  assert(rWf.status === 200 && rWf.data?.user?.employeeId === 'EMP-001' && rWf.data?.user?.department === 'Assembly & Production', 'Admin updates employee workforce profile', `status=${rWf.status}`);
+
+  // Non-admin worker cannot update workforce profile → 403
+  const rWf403 = await req('PATCH', `/admin/users/${studentUserId}/workforce`, {
+    token: studentToken,
+    body: { department: 'Hacked' }
+  });
+  assert(rWf403.status === 403, 'Worker cannot access /admin/users/:id/workforce → 403', `status=${rWf403.status}`);
+
+  // Admin filters users by department
+  const rDept = await req('GET', '/admin/users?department=Assembly%20%26%20Production', { token: adminToken });
+  assert(rDept.status === 200 && rDept.data?.data?.items?.some(u => u.employeeId === 'EMP-001'), 'Admin filters users by department', `status=${rDept.status}`);
+
+  // Admin searches users by employeeId
+  const rSearchEmp = await req('GET', '/admin/users?search=EMP-001', { token: adminToken });
+  assert(rSearchEmp.status === 200 && rSearchEmp.data?.data?.items?.some(u => u.employeeId === 'EMP-001'), 'Admin searches users by employeeId', `status=${rSearchEmp.status}`);
+
+  // Admin gets workforce departments aggregate
+  const rDepts = await req('GET', '/admin/workforce/departments', { token: adminToken });
+  assert(rDepts.status === 200 && Array.isArray(rDepts.data?.data?.departments), 'Admin retrieves workforce departments aggregate', `status=${rDepts.status}`);
 }
 
 // ════════════════════════════════════════════════════════════════════════════
@@ -448,6 +478,14 @@ if (studentToken && testCourseId) {
   // GET my enrollments
   const r3 = await req('GET', '/enrollments/mine', { token: studentToken });
   assert(r3.status === 200, 'GET /enrollments/mine → 200', `status=${r3.status}`);
+
+  // Compliance safety: Student attempting self-unenroll → 403 Forbidden
+  const rUnenroll = await req('DELETE', `/courses/${testCourseId}/enroll`, { token: studentToken });
+  assert(
+    rUnenroll.status === 403,
+    'Worker self-unenroll blocked for compliance → 403',
+    `status=${rUnenroll.status} ${JSON.stringify(rUnenroll.data)}`,
+  );
 }
 
 // ════════════════════════════════════════════════════════════════════════════
@@ -531,6 +569,66 @@ if (studentToken && testLessonId) {
     const r2 = await req('GET', `/courses/${testCourseId}/progress`, { token: studentToken });
     assert(r2.status === 200, 'GET course progress → 200', `status=${r2.status}`);
   }
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// 18b — Training History Preservation & Assignment Revocation
+// ════════════════════════════════════════════════════════════════════════════
+console.log('\n── 18b. Training History Preservation & Revocation ──');
+if (studentToken && testCourseId && adminToken && studentUserId) {
+  // 1. Worker self-unenrollment is blocked with 403
+  const rSelf = await req('DELETE', `/courses/${testCourseId}/enroll`, { token: studentToken });
+  assert(rSelf.status === 403, 'Worker cannot revoke their own assignment → 403', `status=${rSelf.status}`);
+
+  // 2. Instructor cannot use administrative revocation endpoint
+  if (instructorToken) {
+    const rInst = await req('DELETE', `/courses/${testCourseId}/enroll?userId=${studentUserId}`, { token: instructorToken });
+    assert(rInst.status === 403, 'Instructor cannot revoke assignment → 403', `status=${rInst.status}`);
+  }
+
+  // 3. Authorized administrator revokes the assignment
+  const rRevoke = await req('DELETE', `/courses/${testCourseId}/enroll?userId=${studentUserId}`, { token: adminToken });
+  assert(rRevoke.status === 200, 'Administrator revokes assignment → 200', `status=${rRevoke.status} ${JSON.stringify(rRevoke.data)}`);
+
+  // 4. Active assignment behavior: worker is no longer actively enrolled
+  const rActive = await req('GET', `/courses/${testCourseId}/enrollment`, { token: studentToken });
+  assert(rActive.status === 404, 'Revoked assignment not active in /enrollment → 404', `status=${rActive.status}`);
+
+  // 5. Worker cannot complete lessons while revoked
+  if (testLessonId) {
+    const rProg = await req('POST', `/lessons/${testLessonId}/complete`, { token: studentToken });
+    assert(rProg.status === 403, 'Revoked worker cannot track progress → 403', `status=${rProg.status}`);
+  }
+
+  // 6. Worker cannot access live quiz while revoked
+  if (testQuizId) {
+    const rQuiz = await req('GET', `/quizzes/${testQuizId}`, { token: studentToken });
+    assert(rQuiz.status === 403, 'Revoked worker cannot access live quiz → 403', `status=${rQuiz.status}`);
+  }
+
+  // 7. HISTORICAL EVIDENCE PRESERVED: Quiz attempts remain available
+  if (testQuizId) {
+    const rAttempts = await req('GET', `/quizzes/${testQuizId}/attempts/mine`, { token: studentToken });
+    assert(
+      rAttempts.status === 200 && rAttempts.data?.data?.items?.length > 0,
+      'Quiz attempts preserved after revocation → 200 & attempts intact',
+      `status=${rAttempts.status} items=${rAttempts.data?.data?.items?.length}`
+    );
+    const rBest = await req('GET', `/quizzes/${testQuizId}/best/mine`, { token: studentToken });
+    assert(
+      rBest.status === 200 && rBest.data?.data?.best === 100,
+      'Best score history preserved after revocation → 200 & best=100',
+      `status=${rBest.status} best=${rBest.data?.data?.best}`
+    );
+  }
+
+  // 8. Re-assignment / Re-enrollment reactivates the enrollment without duplicate key error
+  const rReEnroll = await req('POST', `/courses/${testCourseId}/enroll`, { token: studentToken });
+  assert(rReEnroll.status === 201, 'Reactivation / Re-enrollment succeeds → 201', `status=${rReEnroll.status}`);
+
+  // 9. Active enrollment restored after reactivation
+  const rRestored = await req('GET', `/courses/${testCourseId}/enrollment`, { token: studentToken });
+  assert(rRestored.status === 200, 'Enrollment active again after reactivation → 200', `status=${rRestored.status}`);
 }
 
 // ════════════════════════════════════════════════════════════════════════════

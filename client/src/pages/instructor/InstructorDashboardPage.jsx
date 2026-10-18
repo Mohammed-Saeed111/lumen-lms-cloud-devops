@@ -138,9 +138,9 @@ function CourseThumbnail({ course }) {
         <div
           aria-hidden="true"
           className="flex h-full w-full items-center justify-center bg-linear-to-br
-            from-primary/30 via-info/15 to-bg-muted text-primary/70"
+            from-primary/20 via-slate-700/10 to-bg-muted text-primary/70"
         >
-          <Icon name="GraduationCap" size={20} />
+          <Icon name="Layers" size={20} />
         </div>
       )}
     </div>
@@ -719,7 +719,7 @@ export default function InstructorDashboardPage() {
 
       {/* My Courses --------------------------------------------------------- */}
       {hasNoCourses ? (
-        <section className="rounded-3xl border border-dashed border-border bg-bg-subtle">
+        <section className="rounded-xl border border-dashed border-border bg-bg-subtle">
           <EmptyState
             size="lg"
             icon="BookOpen"

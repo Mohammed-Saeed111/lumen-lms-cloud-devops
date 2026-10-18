@@ -1,4 +1,4 @@
-# Lumen LMS — robots policy
+# Opervanta — robots policy
 # Public marketing surfaces are open; authenticated app shells are closed.
 
 User-agent: *

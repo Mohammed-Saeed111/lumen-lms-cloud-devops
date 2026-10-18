@@ -37,12 +37,11 @@ export function FinalCta() {
                 id="final-cta-heading"
                 className="text-3xl sm:text-4xl font-semibold tracking-tight"
               >
-                Start learning today.
+                Standardize workforce qualification today.
               </h2>
               <p className="mt-3 text-primary-fg/85 max-w-lg">
-                Create a free account in under a minute. Browse the full
-                catalog, save courses for later, and pick up exactly where
-                you left off — on any device.
+                Access internal factory SOPs, machine certifications, and workplace
+                safety compliance on any authorized terminal or mobile device.
               </p>
             </div>
 
@@ -55,7 +54,7 @@ export function FinalCta() {
                   shadow-md"
                 rightIcon={<Icon name="ArrowRight" size={18} />}
               >
-                Create free account
+                Access workforce portal
               </Button>
               <Button
                 as={Link}
@@ -64,7 +63,7 @@ export function FinalCta() {
                 variant="ghost"
                 className="text-primary-fg hover:bg-white/10"
               >
-                Browse catalog
+                Browse training catalog
               </Button>
             </div>
           </div>

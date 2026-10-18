@@ -11,40 +11,40 @@ import { Reveal } from '../layout/index.js';
 
 const FAQS = [
   {
-    id: 'free',
-    title: 'Are there free courses?',
+    id: 'assignments',
+    title: 'How are training modules assigned to workers?',
     content:
-      'Yes — every category has a curated set of free courses, and many paid courses include a free preview lesson so you can try the instructor before you commit.',
+      'Plant supervisors and training administrators assign required modules based on job role, department, and facility safety standards.',
   },
   {
-    id: 'access',
-    title: 'How long do I have access after enrolling?',
+    id: 'compliance',
+    title: 'How does Opervanta record training activity?',
     content:
-      'Once you enroll in a course, you get lifetime access. You can revisit any lesson, download your certificate again, or pick up where you left off — at any time, on any device.',
+      'Training progress, lesson completion, and quiz scores are recorded with timestamps and passing records for workforce oversight and supervisory reviews.',
   },
   {
     id: 'certificates',
-    title: 'Do certificates actually mean something?',
+    title: 'Are completion credentials verifiable?',
     content:
-      'Each certificate includes a unique verification ID and links to your public profile, so anyone can confirm it. Many of our learners use them as portfolio pieces or in performance reviews.',
+      'Yes. Every issued certificate includes a unique verification code and timestamp linked to employee records for internal supervisor verification.',
   },
   {
     id: 'devices',
-    title: 'Can I learn on my phone?',
+    title: 'Can operators access training on shop-floor tablets?',
     content:
-      'Lumen is a fully responsive web app — lessons, quizzes and progress all sync across desktop, tablet and mobile. A dedicated mobile app is on the roadmap.',
+      'Opervanta is a fully responsive web application optimized for plant tablets, kiosk terminals, and mobile devices across facility operations.',
   },
   {
     id: 'instructors',
-    title: 'Who teaches the courses?',
+    title: 'Who authors and approves training modules?',
     content:
-      'Instructors are vetted working professionals — engineers, designers, marketers, data scientists. We approve every course manually before it goes live to keep quality consistent.',
+      'Standard operating procedures and technical courses are authored by certified plant trainers, safety engineers, and department supervisors.',
   },
   {
-    id: 'refunds',
-    title: 'What if a course is not for me?',
+    id: 'assessments',
+    title: 'What happens if a safety assessment is not passed?',
     content:
-      'Every paid course is covered by a 30-day no-questions-asked refund window. If it does not click, contact support and we will refund you in full.',
+      'Operators can review procedure documentation, consult with their shift supervisor, and re-attempt the assessment according to plant policy guidelines.',
   },
 ];
 

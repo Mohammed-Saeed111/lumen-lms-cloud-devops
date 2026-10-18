@@ -17,10 +17,10 @@ import { Reveal } from '../layout/index.js';
 import { ROUTES } from '../../utils/constants.js';
 
 const BENEFITS = [
-  'Reach a global audience of motivated learners.',
-  'Built-in tools for curriculum, video and quizzes.',
-  'Transparent revenue share with monthly payouts.',
-  'Dedicated support from our instructor success team.',
+  'Author and update standard operating procedures (SOPs).',
+  'Assign role-based safety and machinery qualification paths.',
+  'Verify operator comprehension with structured knowledge checks.',
+  'Track department-wide training completion and certifications.',
 ];
 
 export function InstructorCTA() {
@@ -34,17 +34,17 @@ export function InstructorCTA() {
 
         <div>
           <p className="text-xs font-semibold uppercase tracking-wider text-primary">
-            For instructors
+            For Supervisors &amp; Technical Trainers
           </p>
           <h2
             id="instructor-cta-heading"
             className="mt-3 text-2xl sm:text-3xl font-semibold tracking-tight text-text"
           >
-            Teach what you love. Earn while you do it.
+            Standardize operations. Qualify your workforce.
           </h2>
           <p className="mt-4 text-text-muted">
-            Whether you teach React, watercolor or accounting — we give you the
-            stage and the toolkit. You bring the craft.
+            Equip your plant technicians, shift leads, and safety officers with the curriculum
+            tools needed to publish SOPs, evaluate competency, and maintain operational oversight.
           </p>
 
           <ul className="mt-6 space-y-3">
@@ -66,7 +66,7 @@ export function InstructorCTA() {
               size="lg"
               rightIcon={<Icon name="ArrowRight" size={18} />}
             >
-              Start teaching
+              Trainer Portal
             </Button>
           </div>
         </div>
@@ -88,13 +88,13 @@ const DashboardMock = () => (
 
     <div className="flex items-center justify-between mb-6 relative">
       <div>
-        <p className="text-xs text-text-subtle">Lifetime earnings</p>
-        <p className="text-3xl font-semibold text-text mt-1">$48,720</p>
+        <p className="text-xs text-text-subtle">Department Qualification Rate</p>
+        <p className="text-3xl font-semibold text-text mt-1">94.2%</p>
       </div>
       <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full
         bg-success/15 text-success text-xs font-medium">
         <Icon name="TrendingUp" size={12} />
-        +18.4%
+        +5.8% this month
       </span>
     </div>
 
@@ -123,9 +123,9 @@ const DashboardMock = () => (
 
     <ul className="mt-6 space-y-3 relative">
       {[
-        { title: 'Modern React Patterns', delta: '+ $1,240', sub: '32 new students' },
-        { title: 'Design Systems 101', delta: '+ $860', sub: '21 new students' },
-        { title: 'TypeScript in Practice', delta: '+ $510', sub: '14 new students' },
+        { title: 'Lockout/Tagout (LOTO) Compliance', delta: '100%', sub: '48 technicians certified' },
+        { title: 'CNC Machining Center Operation', delta: '92%', sub: '32 operators qualified' },
+        { title: 'Hazard Communication & HazMat', delta: '96%', sub: '64 workers completed' },
       ].map((row) => (
         <li
           key={row.title}
@@ -133,7 +133,7 @@ const DashboardMock = () => (
         >
           <span className="h-9 w-9 rounded-lg bg-primary/15 text-primary
             flex items-center justify-center">
-            <Icon name="BookOpen" size={16} />
+            <Icon name="ShieldCheck" size={16} />
           </span>
           <div className="flex-1 min-w-0">
             <p className="text-sm font-medium text-text truncate">{row.title}</p>

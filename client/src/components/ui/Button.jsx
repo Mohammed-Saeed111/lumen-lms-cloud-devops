@@ -39,10 +39,10 @@ const VARIANT_CLASSES = {
 };
 
 const SIZE_CLASSES = {
-  sm: 'h-8 px-3 text-sm gap-1.5 rounded-md',
-  md: 'h-10 px-4 text-sm gap-2 rounded-lg',
-  lg: 'h-12 px-5 text-base gap-2 rounded-lg',
-  icon: 'h-10 w-10 p-0 rounded-lg',
+  sm: 'h-8 min-h-[32px] px-3 text-sm gap-1.5 rounded-md',
+  md: 'h-10 min-h-[42px] px-4 text-sm gap-2 rounded-md',
+  lg: 'h-12 min-h-[48px] px-5 text-base gap-2 rounded-md',
+  icon: 'h-10 w-10 min-h-[40px] min-w-[40px] p-0 rounded-md',
 };
 
 export const Button = forwardRef(function Button(

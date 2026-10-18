@@ -16,74 +16,73 @@ const TERMS_SECTIONS = [
     id: 'acceptance',
     title: 'Acceptance of these terms',
     body: [
-      'By creating an account, enrolling in a course or otherwise using Lumen LMS (the "Service"), you agree to be bound by these Terms of Service and by our Privacy Policy. If you do not agree, please do not use the Service.',
-      'These terms apply to learners, instructors and any visitor browsing public pages. You confirm that you are at least 13 years old, or the minimum digital-consent age in your jurisdiction, whichever is higher.',
+      'By creating an account, accessing a training module or otherwise using Opervanta (the "Service"), you agree to be bound by these Terms of Service and by our Privacy Policy. If you do not agree, please do not use the Service.',
+      'These terms apply to workforce learners, trainers, supervisors, and administrative personnel accessing the platform.',
     ],
   },
   {
     id: 'accounts',
     title: 'Your account',
     body: [
-      'You are responsible for keeping your login credentials confidential and for all activity under your account. Notify us immediately at hello@lumen.lms if you suspect unauthorised access.',
-      'We may suspend or terminate accounts that breach these terms, infringe other users\u2019 rights or expose the Service to legal or security risk.',
+      'You are responsible for keeping your login credentials confidential and for all activity under your account. Notify us at support@opervanta.com if you suspect unauthorised access.',
+      'We may suspend or terminate accounts that breach these terms, infringe other users\u2019 rights or expose the Service to operational, legal, or security risk.',
     ],
   },
   {
     id: 'content',
-    title: 'Course content & licensing',
+    title: 'Course content & training materials',
     body: [
-      'Instructors retain ownership of the original course materials they upload. By publishing on Lumen LMS, instructors grant us a worldwide, non-exclusive licence to host, stream and display that content for the purpose of operating the Service.',
-      'Learners receive a personal, non-transferable, non-commercial licence to view enrolled content. Downloading, redistributing or reselling course materials without written permission from the instructor is prohibited.',
-      'You retain ownership of any feedback, reviews and discussion posts you submit, and grant us the right to display them within the Service in association with the relevant course.',
+      'Training materials, standard operating procedures, and safety modules uploaded to Opervanta are maintained for workforce training and operational instruction.',
+      'Learners receive internal access to view and complete assigned training materials. Downloading, unauthorized distribution, or misuse of operational procedures outside plant authorization is prohibited.',
+      'Feedback, questions, and responses submitted within training assessments are retained for training recordkeeping and operational evaluation.',
     ],
   },
   {
     id: 'acceptable-use',
     title: 'Acceptable use',
     body: [
-      'Do not upload or share content that is illegal, defamatory, harassing, hateful, sexually exploitative, plagiarised or that infringes intellectual-property rights. Do not attempt to disrupt the Service, probe for vulnerabilities outside our published security policy, or scrape data at scale.',
-      'We rely on community reports plus automated checks to enforce these rules. Repeated violations will result in account termination without refund.',
+      'Do not upload or share content that is hazardous, defamatory, harassing, hateful, or that infringes intellectual-property rights. Do not attempt to disrupt the Service, probe for vulnerabilities outside our published security policy, or scrape platform data.',
+      'Repeated violations will result in administrative account suspension or revocation of platform access.',
     ],
   },
   {
-    id: 'payments',
-    title: 'Payments, refunds & taxes',
+    id: 'assignments',
+    title: 'Training assignments & access administration',
     body: [
-      'Where paid courses are offered, the price shown at checkout is the price you pay. Local taxes, where applicable, are added at the final step.',
-      'Learners may request a refund within 14 days of enrolment, provided they have completed less than 30% of the course. Refunds are returned to the original payment method.',
-      'Instructors are paid out via the payout method configured in their account settings. We deduct a platform fee disclosed in the instructor agreement before transferring earnings.',
+      'Training modules on Opervanta are assigned by plant supervisors and administrators as part of organizational workforce development. Opervanta does not process individual retail purchases, consumer transactions, or instructor commission payouts.',
+      'Access to modules is administered through internal role assignments. When an administrator revokes an active assignment, historical training records, completed lesson history, and assessment attempts remain preserved for audit and qualification tracking.',
     ],
   },
   {
     id: 'certificates',
     title: 'Certificates of completion',
-    body: 'Certificates issued by Lumen LMS confirm that a learner finished a specific course on a specific date. They are not formal academic qualifications and are not accredited by any government or university unless explicitly stated on the certificate itself.',
+    body: 'Certificates and completion records issued by Opervanta confirm that a learner has completed a specific training module or safety assessment on a specific date. They document internal workforce training and qualification records and do not constitute independent external statutory licenses unless explicitly validated by accredited certifying authorities.',
   },
   {
     id: 'availability',
     title: 'Availability & changes to the Service',
     body: [
-      'We work hard to keep Lumen LMS available 24/7, but we do not guarantee uninterrupted access. Planned maintenance windows are communicated in advance whenever possible.',
-      'We may add, modify or remove features at any time. We will not retroactively remove access to a course you have paid for; if a course is removed by an instructor, learners who already enrolled keep access for at least 12 months.',
+      'We work hard to keep Opervanta available 24/7 for plant operations, but we do not guarantee uninterrupted access. Planned maintenance windows are communicated in advance whenever possible.',
+      'We may add, modify or update training features as plant operations require. When training modules are revised or retired by instructors or administrators, historical completion records for previously certified workers remain preserved.',
     ],
   },
   {
     id: 'liability',
     title: 'Disclaimers & limitation of liability',
     body: [
-      'The Service and the course content are provided "as is" without warranties of any kind, whether express or implied. We do not warrant that the content is accurate, complete or fit for a particular purpose.',
-      'To the maximum extent permitted by law, our total liability arising from your use of the Service is limited to the greater of (a) the amount you paid us in the previous 12 months or (b) USD 100. We are not liable for indirect, incidental or consequential damages.',
+      'The Service and training content are provided "as is" for internal workforce instruction and operational oversight. We do not warrant that all materials are error-free or that the platform alone guarantees statutory compliance.',
+      'To the maximum extent permitted by law, our liability arising from your use of the Service is limited to direct administrative remedies or USD 100. We are not liable for indirect, incidental, or consequential damages.',
     ],
   },
   {
     id: 'termination',
     title: 'Termination',
-    body: 'You may close your account at any time from Settings → Account. We may suspend or terminate access if you breach these terms, if continued access exposes the platform to legal risk, or as required by law. Sections that by their nature should survive termination — such as content licences for previously published material, payment obligations and limitation of liability — will continue to apply.',
+    body: 'Administrative personnel may suspend or revoke access to training modules or accounts if users breach these terms, if continued access compromises plant security or safety, or as required by operational policies. Sections that by their nature should survive termination — including training records retention, content licenses for published materials, and limitation of liability — will continue to apply.',
   },
   {
     id: 'governing-law',
     title: 'Governing law & disputes',
-    body: 'These terms are governed by the laws of the jurisdiction in which Lumen LMS is registered, without regard to its conflict-of-laws rules. Any dispute will first be addressed through good-faith negotiation; if unresolved, it will be settled by the competent courts of that jurisdiction.',
+    body: 'These terms are governed by the applicable laws of the jurisdiction in which Opervanta is deployed, without regard to conflict-of-laws principles. Any dispute will first be addressed through good-faith administrative review; if unresolved, it will be settled by competent authorities of that jurisdiction.',
   },
   {
     id: 'changes',
@@ -97,12 +96,12 @@ export default function TermsPage() {
     <>
       <Seo
         title="Terms of Service"
-        description="The rules that govern your use of Lumen LMS — accounts, content, payments and platform policies."
+        description="The rules that govern your use of Opervanta — accounts, content, training compliance and platform policies."
         url="/terms"
       />
       <LegalPage
         title="Terms of Service"
-        subtitle="The agreement between you and Lumen LMS when you create an account, enrol in a course or publish content on the platform."
+        subtitle="The agreement between you and Opervanta when you create an account, enrol in a course or publish content on the platform."
         effectiveDate="2026-04-01"
         intro="This is the plain-English version of our terms. We try to keep it short, specific and free of legalese — but where a section uses a defined word like “Service”, the meaning carries through the whole document."
         sections={TERMS_SECTIONS}

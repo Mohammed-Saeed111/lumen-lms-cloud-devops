@@ -46,14 +46,14 @@ export function LegalPage({
   effectiveDate,
   intro,
   sections = [],
-  contactEmail = 'hello@lumen.lms',
+  contactEmail = 'support@opervanta.com',
 }) {
   return (
     <div className="bg-bg">
       <div className="mx-auto max-w-3xl px-6 py-16 sm:py-20">
         <header className="mb-10 border-b border-border pb-8">
           <p className="text-xs font-medium uppercase tracking-[0.18em] text-text-subtle">
-            Lumen LMS · Legal
+            Opervanta · Legal
           </p>
           <h1 className="mt-3 text-3xl font-semibold tracking-tight text-text sm:text-4xl">
             {title}

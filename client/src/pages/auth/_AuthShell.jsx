@@ -32,19 +32,19 @@ import { durations, ease } from '../../utils/motion.js';
 
 const BRAND_HIGHLIGHTS = [
   {
-    icon: 'GraduationCap',
-    title: 'Project-based courses',
-    body: 'Learn by building real-world projects with mentors who ship for a living.',
+    icon: 'ShieldCheck',
+    title: 'Standard Operating Procedures (SOPs)',
+    body: 'Standardized operational workflows and verified workplace safety protocols.',
   },
   {
-    icon: 'Users',
-    title: 'A community that learns together',
-    body: 'Discussions, study groups, and live cohorts every Monday.',
+    icon: 'Cpu',
+    title: 'Machine & Line Qualifications',
+    body: 'Verify practical operator competencies and machine authorization records.',
   },
   {
     icon: 'Award',
-    title: 'Verifiable certificates',
-    body: 'Showcase what you finished with a sharable, signed certificate.',
+    title: 'Workforce Training Oversight',
+    body: 'Maintain structured training records, completion certificates, and qualification logs.',
   },
 ];
 
@@ -82,7 +82,7 @@ export function AuthShell({
           <Link
             to={ROUTES.home}
             className="inline-flex items-center gap-2 lg:hidden mb-6 text-text"
-            aria-label="Lumen LMS — home"
+            aria-label="Opervanta — home"
           >
             <Logo variant="wordmark" size={28} color="var(--color-primary)" />
           </Link>
@@ -119,46 +119,45 @@ const BrandPanel = () => (
     animate={{ opacity: 1, scale: 1 }}
     transition={{ duration: durations.slow, ease, delay: 0.05 }}
     aria-hidden="true"
-    className="relative hidden lg:flex overflow-hidden bg-linear-to-br
-      from-primary via-primary-hover to-info text-white"
+    className="relative hidden lg:flex overflow-hidden bg-slate-900 border-l border-slate-800 text-slate-100"
   >
-    {/* Decorative blobs */}
-    <div className="pointer-events-none absolute -top-24 -right-16 h-96 w-96
-      rounded-full bg-white/15 blur-3xl animate-blob" />
-    <div className="pointer-events-none absolute -bottom-20 -left-10 h-80 w-80
-      rounded-full bg-info/30 blur-3xl animate-blob"
-      style={{ animationDelay: '-5s' }}
+    {/* Subtle industrial background pattern */}
+    <div
+      aria-hidden="true"
+      className="pointer-events-none absolute inset-0 bg-[radial-gradient(#1e3a8a_1px,transparent_1px)] [background-size:24px_24px] opacity-25"
     />
-    <div className="pointer-events-none absolute inset-0
-      bg-[radial-gradient(60%_60%_at_50%_50%,transparent_30%,rgb(0_0_0/0.15)_100%)]" />
+    <div
+      aria-hidden="true"
+      className="pointer-events-none absolute inset-0 bg-linear-to-b from-slate-900/60 via-transparent to-slate-950/80"
+    />
 
     <div className="relative flex flex-col justify-between p-12 w-full max-w-xl mx-auto">
       <Link
         to={ROUTES.home}
         className="inline-flex items-center gap-2 text-white"
-        aria-label="Lumen LMS — home"
+        aria-label="Opervanta — home"
       >
-        <Logo variant="wordmark" size={32} color="#ffffff" accent="#ffffff" />
+        <Logo variant="wordmark" size={32} color="#ffffff" accent="#93c5fd" />
       </Link>
 
       <div>
-        <p className="text-sm font-medium uppercase tracking-[0.2em] text-white/70">
-          Lumen LMS
+        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-blue-400">
+          Opervanta Platform
         </p>
-        <h2 className="mt-3 text-3xl font-semibold leading-snug max-w-md">
-          Build skills that build careers — one focused lesson at a time.
+        <h2 className="mt-3 text-3xl font-semibold leading-snug max-w-md text-white">
+          Industrial Workforce Training & Competency Management Platform
         </h2>
 
         <ul className="mt-10 space-y-5 max-w-md">
           {BRAND_HIGHLIGHTS.map((item) => (
             <li key={item.title} className="flex items-start gap-3">
               <span className="mt-0.5 inline-flex h-9 w-9 shrink-0 items-center
-                justify-center rounded-xl bg-white/15 backdrop-blur-sm">
-                <Icon name={item.icon} size={18} className="text-white" />
+                justify-center rounded-lg bg-slate-800 border border-slate-700 text-blue-400">
+                <Icon name={item.icon} size={18} />
               </span>
               <div>
-                <p className="text-sm font-semibold">{item.title}</p>
-                <p className="text-xs text-white/75 mt-0.5 leading-relaxed">
+                <p className="text-sm font-semibold text-slate-100">{item.title}</p>
+                <p className="text-xs text-slate-400 mt-0.5 leading-relaxed">
                   {item.body}
                 </p>
               </div>
@@ -167,17 +166,9 @@ const BrandPanel = () => (
         </ul>
       </div>
 
-      <div className="flex items-center gap-3 text-xs text-white/75">
-        <div className="flex -space-x-2">
-          {['#fde68a', '#bbf7d0', '#bae6fd'].map((color) => (
-            <span
-              key={color}
-              className="h-7 w-7 rounded-full border-2 border-white/40"
-              style={{ background: color }}
-            />
-          ))}
-        </div>
-        <span>Join a community that learns by building.</span>
+      <div className="flex items-center gap-2 text-xs text-slate-400 border-t border-slate-800 pt-4">
+        <Icon name="ShieldCheck" size={16} className="text-emerald-500" />
+        <span>Authorized Personnel & Plant Operations Portal</span>
       </div>
     </div>
   </motion.aside>

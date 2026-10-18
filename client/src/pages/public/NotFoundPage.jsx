@@ -98,7 +98,7 @@ export default function NotFoundPage() {
               in-app route. The same address is exposed in the footer's
               "Contact" link so the support inbox stays consistent. */}
           <a
-            href="mailto:hello@lumen.lms?subject=Broken%20link%20on%20Lumen%20LMS"
+            href="mailto:support@opervanta.com?subject=Broken%20link%20on%20Opervanta"
             className="font-medium text-primary hover:underline underline-offset-4"
           >
             Let us know

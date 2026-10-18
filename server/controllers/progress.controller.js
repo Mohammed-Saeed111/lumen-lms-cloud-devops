@@ -58,6 +58,7 @@ const findEnrolledLessonContextOr403 = async (lessonId, user) => {
   const enrollment = await Enrollment.findOne({
     userId: user._id,
     courseId: lesson.courseId,
+    status: { $ne: 'revoked' },
   });
 
   if (!enrollment) {
@@ -155,6 +156,7 @@ export const getCourseProgress = asyncHandler(async (req, res) => {
   const enrollment = await Enrollment.findOne({
     userId: req.user._id,
     courseId: req.params.id,
+    status: { $ne: 'revoked' },
   });
 
   if (!enrollment) throw ApiError.notFound('You are not enrolled in this course.');

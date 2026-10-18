@@ -17,9 +17,9 @@ import { forwardRef } from 'react';
 import { cn } from '../../utils/cn.js';
 
 const SIZE_CLASSES = {
-  sm: 'h-8 text-sm',
-  md: 'h-10 text-sm',
-  lg: 'h-12 text-base',
+  sm: 'h-8 min-h-[32px] text-sm',
+  md: 'h-10 min-h-[42px] text-sm',
+  lg: 'h-12 min-h-[48px] text-base',
 };
 
 export const Input = forwardRef(function Input(
@@ -39,7 +39,7 @@ export const Input = forwardRef(function Input(
   return (
     <div
       className={cn(
-        'flex items-center gap-2 rounded-lg border bg-bg px-3 transition-colors',
+        'flex items-center gap-2 rounded-md border bg-bg px-3 transition-colors',
         'focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20',
         invalid
           ? 'border-danger focus-within:border-danger focus-within:ring-danger/20'

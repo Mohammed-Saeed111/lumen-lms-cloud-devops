@@ -34,6 +34,12 @@ const NAV_ITEMS = [
   { to: ROUTES.adminPending, label: 'Pending Review', icon: 'ClipboardCheck' },
 ];
 
+const WORKFORCE_NAV_ITEMS = [
+  { to: ROUTES.adminDepartments, label: 'Departments', icon: 'Building2' },
+  { to: ROUTES.adminJobs, label: 'Job Positions', icon: 'Briefcase' },
+  { to: ROUTES.adminTraining, label: 'Training Records', icon: 'GraduationCap' },
+];
+
 const SidebarLink = ({ to, label, icon, end, onClick }) => (
   <NavLink
     to={to}
@@ -59,6 +65,12 @@ const SidebarNav = ({ onItemClick }) => (
       Admin Console
     </p>
     {NAV_ITEMS.map((item) => (
+      <SidebarLink key={item.to} {...item} onClick={onItemClick} />
+    ))}
+    <p className="text-xs font-semibold uppercase tracking-wider text-text-subtle px-3 mt-4 mb-1">
+      Workforce
+    </p>
+    {WORKFORCE_NAV_ITEMS.map((item) => (
       <SidebarLink key={item.to} {...item} onClick={onItemClick} />
     ))}
   </nav>

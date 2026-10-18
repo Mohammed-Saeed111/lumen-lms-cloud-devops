@@ -17,7 +17,7 @@ const TESTIMONIALS = [
     name: 'Maya Patel',
     role: 'Front-end developer · Berlin',
     quote:
-      'I tried four other platforms before Lumen. The hands-on quizzes are what finally made the lessons stick — I shipped my first portfolio site in three weeks.',
+      'Our plant transitioned to Opervanta for standard operating procedures and machine safety compliance. The tracking and qualification assessments have dramatically improved shift readiness.',
   },
   {
     name: 'Jordan Reyes',

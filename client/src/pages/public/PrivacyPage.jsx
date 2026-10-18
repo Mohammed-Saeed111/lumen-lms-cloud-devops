@@ -14,7 +14,7 @@ const PRIVACY_SECTIONS = [
   {
     id: 'who-we-are',
     title: 'Who we are',
-    body: 'Lumen LMS is the controller of personal data processed via the platform at lumen.lms (the "Service"). Throughout this policy, "we", "us" and "our" refer to the Lumen LMS team. You can reach us at hello@lumen.lms for any privacy-related question or to exercise your data-subject rights.',
+    body: 'Opervanta is the controller of personal data processed via the platform (the "Service"). Throughout this policy, "we", "us" and "our" refer to the Opervanta team. You can reach us at support@opervanta.com for any privacy-related question or to exercise your data-subject rights.',
   },
   {
     id: 'data-we-collect',
@@ -23,7 +23,7 @@ const PRIVACY_SECTIONS = [
       'Account data — your name, email address, hashed password, optional avatar URL and the role assigned to your account (learner, instructor, admin).',
       'Learning activity — courses you enrol in, lessons you mark as complete, quiz attempts, certificate IDs and the timestamps of these events. We use this data to render your dashboard, calculate progress and issue certificates.',
       'Technical data — IP address, browser user-agent and device type, captured in standard server logs and used to debug issues, prevent abuse and produce aggregate usage analytics.',
-      'Communication data — messages you send to support and the content of any reviews or discussion posts you publish.',
+      'Communication data — messages you send to support and training feedback submitted within the platform.',
     ],
   },
   {
@@ -31,7 +31,7 @@ const PRIVACY_SECTIONS = [
     title: 'How we use your data',
     body: [
       'To operate the Service — authenticate you, deliver course content, persist your progress and issue completion certificates.',
-      'To communicate with you — send transactional emails (verification, password reset, certificate ready, billing receipts) and, where you opt in, occasional product updates. You can opt out of marketing emails at any time from Settings → Notifications.',
+      'To communicate with you — send transactional notifications (verification, password reset, certificate ready, assignment updates) and essential operational notices. You can manage notification preferences at any time from Settings → Notifications.',
       'To keep the platform safe — detect fraudulent sign-ups, enforce rate limits and respond to security incidents.',
       'To improve the product — analyse aggregate, anonymised usage patterns to prioritise features and fix UX paper-cuts.',
     ],
@@ -39,7 +39,7 @@ const PRIVACY_SECTIONS = [
   {
     id: 'legal-bases',
     title: 'Legal bases for processing',
-    body: 'We process personal data on the legal bases set out in the GDPR and equivalent regulations: performance of the contract you enter into when you create an account; our legitimate interest in operating, securing and improving the Service; your explicit consent for optional features (e.g. marketing emails); and compliance with our legal obligations (e.g. tax records on paid courses).',
+    body: 'We process personal data on applicable legal bases: performance of operational training contracts and agreements when accounts are established; our legitimate organizational interest in operating, securing and verifying workforce qualifications; explicit consent for optional features; and compliance with workforce and safety recordkeeping requirements.',
   },
   {
     id: 'cookies',
@@ -53,10 +53,10 @@ const PRIVACY_SECTIONS = [
     id: 'sharing',
     title: 'Who we share data with',
     body: [
-      'Hosting & infrastructure — our application code runs on Render and the database on MongoDB Atlas. Static assets are served by Netlify\u2019s edge network. These providers process data only to deliver the infrastructure service we contract with them for.',
-      'Email delivery — transactional emails are dispatched via a third-party email provider that processes the recipient address solely to deliver the message.',
+      'Hosting & infrastructure — cloud infrastructure and database service providers that process data strictly to deliver platform services.',
+      'Email delivery — transactional emails are dispatched via authenticated email service providers solely to deliver system messages.',
       'Legal disclosures — we may disclose data when compelled by a valid legal request, or to defend our rights and the safety of our users.',
-      'We do not sell personal data and we do not share it with third parties for their own marketing purposes.',
+      'We do not sell personal data and we do not share it with third parties for marketing purposes.',
     ],
   },
   {
@@ -74,7 +74,7 @@ const PRIVACY_SECTIONS = [
     title: 'Your rights',
     body: [
       'You have the right to access the personal data we hold about you, to correct it, to request its deletion, to restrict or object to certain processing, and to receive a portable copy of your data. You can also withdraw any consent you previously gave at any time without affecting the lawfulness of prior processing.',
-      'Most rights can be exercised directly from Settings — Profile (correction), Account (deletion) and Notifications (consent). For any request that cannot be self-served, email hello@lumen.lms and we will respond within 30 days.',
+      'Most rights can be exercised directly from Settings — Profile (correction), Account (deletion) and Notifications (consent). For any request that cannot be self-served, email support@opervanta.com and we will respond within 30 days.',
       'If you believe your data is being mishandled, you have the right to lodge a complaint with your national data-protection authority.',
     ],
   },
@@ -86,7 +86,7 @@ const PRIVACY_SECTIONS = [
   {
     id: 'children',
     title: 'Children\u2019s data',
-    body: 'Lumen LMS is not directed at children under 13 (or the higher minimum digital-consent age set by your jurisdiction). We do not knowingly collect personal data from children. If you become aware that a child has signed up without verifiable parental consent, please contact us so we can remove the account.',
+    body: 'Opervanta is not directed at children under 13 (or the higher minimum digital-consent age set by your jurisdiction). We do not knowingly collect personal data from children. If you become aware that a child has signed up without verifiable parental consent, please contact us so we can remove the account.',
   },
   {
     id: 'changes',
@@ -100,12 +100,12 @@ export default function PrivacyPage() {
     <>
       <Seo
         title="Privacy Policy"
-        description="How Lumen LMS collects, uses and protects your personal data — written in plain language."
+        description="How Opervanta collects, uses and protects your personal data — written in plain language."
         url="/privacy"
       />
       <LegalPage
         title="Privacy Policy"
-        subtitle="What we collect, why we collect it and the controls you have over your data on Lumen LMS."
+        subtitle="What we collect, why we collect it and the controls you have over your data on Opervanta."
         effectiveDate="2026-04-01"
         intro={
           'We treat your data the way we\u2019d want ours treated: collected only when there\u2019s a clear reason, kept only as long as needed, and never sold to anyone. This page explains the specifics.'

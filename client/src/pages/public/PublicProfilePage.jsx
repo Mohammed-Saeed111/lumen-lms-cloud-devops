@@ -194,8 +194,8 @@ export default function PublicProfilePage() {
   const seoDescription =
     profile.headline ||
     (isInstructor
-      ? `Public instructor profile of ${profile.name} on Lumen LMS.`
-      : `Public learner profile of ${profile.name} on Lumen LMS.`);
+      ? `Technical instructor profile of ${profile.name} on Opervanta.`
+      : `Workforce profile of ${profile.name} on Opervanta.`);
 
   return (
     <div className="mx-auto max-w-5xl px-4 sm:px-6 py-10">

@@ -241,14 +241,19 @@ const TIME_LIMIT_GRACE_SECONDS = 5;
  * the failure mode is "you don't have permission" rather than "not
  * found".
  */
-const findEnrolledQuizOr403 = async (quizId, user) => {
+const findEnrolledQuizOr403 = async (quizId, user, { requireActive = false } = {}) => {
   const quiz = await Quiz.findById(quizId);
   if (!quiz) throw ApiError.notFound('Quiz not found.');
 
-  const enrollment = await Enrollment.exists({
+  const filter = {
     userId: user._id,
     courseId: quiz.courseId,
-  });
+  };
+  if (requireActive) {
+    filter.status = { $ne: 'revoked' };
+  }
+
+  const enrollment = await Enrollment.exists(filter);
   if (!enrollment) {
     throw ApiError.forbidden('You must be enrolled in this course to access the quiz.');
   }
@@ -266,7 +271,7 @@ const findEnrolledQuizOr403 = async (quizId, user) => {
  * answers are persisted.
  */
 export const getQuizForStudent = asyncHandler(async (req, res) => {
-  const quiz = await findEnrolledQuizOr403(req.params.id, req.user);
+  const quiz = await findEnrolledQuizOr403(req.params.id, req.user, { requireActive: true });
   res.json({ success: true, quiz: quiz.toStudentView() });
 });
 
@@ -294,7 +299,7 @@ export const getQuizForStudent = asyncHandler(async (req, res) => {
  * model's stricter `<= timeLimit` clamp re-running on the same value.
  */
 export const submitQuiz = asyncHandler(async (req, res) => {
-  const quiz = await findEnrolledQuizOr403(req.params.id, req.user);
+  const quiz = await findEnrolledQuizOr403(req.params.id, req.user, { requireActive: true });
 
   const answers = Array.isArray(req.body.answers) ? req.body.answers : [];
   if (answers.length !== quiz.questions.length) {

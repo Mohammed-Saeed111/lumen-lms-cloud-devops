@@ -36,10 +36,8 @@ import {
   ActiveFilterChips,
   ActiveFiltersBadge,
   CoursesGrid,
-  DEFAULT_PRICE_MODE,
   DEFAULT_SORT,
   FiltersSidebar,
-  PRICE_LIMITS,
   SORT_OPTIONS,
   countActiveFilters,
   findDurationBucket,
@@ -54,10 +52,7 @@ import { readPrefetchedCatalog } from '../../utils/prefetch.js';
 
 /**
  * Build a friendly SEO title and description for the catalog from the
- * current filter selection — turns share links like
- * `/courses?category=programming,design&level=beginner` into a tab
- * title that actually describes the result set instead of a generic
- * "Browse courses".
+ * current filter selection.
  */
 const buildCatalogSeo = ({ filters, total }) => {
   const parts = [];
@@ -73,23 +68,21 @@ const buildCatalogSeo = ({ filters, total }) => {
     );
     parts.push(labels.join('/'));
   }
-  if (filters.priceMode === 'free') parts.push('Free');
-  else if (filters.priceMode === 'paid') parts.push('Paid');
   if (filters.search?.trim()) parts.push(`"${filters.search.trim()}"`);
 
-  const title = parts.length > 0 ? `${parts.join(' · ')} courses` : 'Courses';
+  const title = parts.length > 0 ? `${parts.join(' · ')} training programs` : 'Training Programs';
 
   const descriptionBits = [];
   if (parts.length > 0) {
-    descriptionBits.push(`${parts.join(' · ')} courses`);
+    descriptionBits.push(`${parts.join(' · ')} training programs`);
   } else {
-    descriptionBits.push('Browse our full catalog of courses');
+    descriptionBits.push('Browse our plant training directory');
   }
   if (typeof total === 'number' && total > 0) {
-    descriptionBits.push(`${total.toLocaleString()} results`);
+    descriptionBits.push(`${total.toLocaleString()} modules`);
   }
   descriptionBits.push(
-    'taught by working professionals — filter by topic, level, price or length to find the right path.',
+    'filter by department, competency level, or duration to find plant workforce training modules.',
   );
 
   return { title, description: descriptionBits.join(' · ') };
@@ -112,21 +105,10 @@ const parseNumber = (value, fallback) => {
 };
 
 const parseFiltersFromParams = (params) => {
-  const priceModeRaw = params.get('priceMode');
-  const priceMode = ['free', 'paid'].includes(priceModeRaw)
-    ? priceModeRaw
-    : DEFAULT_PRICE_MODE;
-
-  const priceMax = parseNumber(params.get('priceMax'), PRICE_LIMITS.max);
-  const priceMin = parseNumber(params.get('priceMin'), PRICE_LIMITS.min);
-
   return {
     search: params.get('search') ?? '',
     categories: parseList(params.get('category')),
     levels: parseList(params.get('level')),
-    priceMode,
-    priceMin: Math.max(PRICE_LIMITS.min, priceMin),
-    priceMax: Math.min(PRICE_LIMITS.max, priceMax),
     duration: params.get('duration') || null,
     sort:
       SORT_OPTIONS.some((option) => option.value === params.get('sort'))
@@ -147,12 +129,6 @@ const filtersToParams = (filters) => {
   if (filters.search?.trim()) params.set('search', filters.search.trim());
   if (filters.categories?.length) params.set('category', filters.categories.join(','));
   if (filters.levels?.length) params.set('level', filters.levels.join(','));
-  if (filters.priceMode && filters.priceMode !== DEFAULT_PRICE_MODE) {
-    params.set('priceMode', filters.priceMode);
-  }
-  if (filters.priceMode !== 'free' && filters.priceMax < PRICE_LIMITS.max) {
-    params.set('priceMax', String(filters.priceMax));
-  }
   if (filters.duration) params.set('duration', filters.duration);
   if (filters.sort && filters.sort !== DEFAULT_SORT) params.set('sort', filters.sort);
   if (filters.page > 1) params.set('page', String(filters.page));
@@ -160,10 +136,7 @@ const filtersToParams = (filters) => {
 };
 
 /**
- * Build the API query from the current filter state. The server speaks
- * `category` / `level` (comma-separated), `minPrice` / `maxPrice`,
- * `priceMode`, `minDuration` / `maxDuration` (minutes), `sort`, `page`,
- * `limit`. Any filter equal to its default is omitted.
+ * Build the API query from the current filter state.
  */
 const buildApiQuery = (filters) => {
   const query = {
@@ -175,13 +148,6 @@ const buildApiQuery = (filters) => {
   if (filters.search?.trim()) query.search = filters.search.trim();
   if (filters.categories.length) query.category = filters.categories.join(',');
   if (filters.levels.length) query.level = filters.levels.join(',');
-
-  if (filters.priceMode === 'free') {
-    query.priceMode = 'free';
-  } else {
-    if (filters.priceMode === 'paid') query.priceMode = 'paid';
-    if (filters.priceMax < PRICE_LIMITS.max) query.maxPrice = filters.priceMax;
-  }
 
   const bucket = findDurationBucket(filters.duration);
   if (bucket) {

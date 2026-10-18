@@ -16,21 +16,21 @@ import { stagger, staggerItem } from '../../utils/motion.js';
 
 const STEPS = [
   {
-    title: 'Pick a course',
+    title: 'Access assigned modules',
     description:
-      'Browse the catalog across programming, design, data and more — filter by level, length and price.',
+      'Explore standard operating procedures, safety protocols, and technical machinery courses assigned to your role.',
     icon: 'Search',
   },
   {
-    title: 'Learn at your pace',
+    title: 'Complete digital training',
     description:
-      'Watch on-demand lessons, complete hands-on quizzes and track your progress across every device.',
+      'Review SOP documentation, complete lessons, and pass required safety knowledge assessments.',
     icon: 'PlayCircle',
   },
   {
-    title: 'Earn a certificate',
+    title: 'Attain qualification',
     description:
-      'Finish the course, pass the final quiz, and download a verifiable certificate to share with employers.',
+      'Fulfill all compliance requirements, earn validated credentials, and maintain operational compliance records.',
     icon: 'Award',
   },
 ];
@@ -49,7 +49,7 @@ export function HowItWorks() {
           id="how-it-works-heading"
           className="mt-3 text-2xl sm:text-3xl font-semibold tracking-tight text-text"
         >
-          From curious to confident in three steps
+          Standardized workforce readiness in three steps
         </h2>
       </Reveal>
 

@@ -58,6 +58,7 @@ import {
   listUsers,
   toggleUserActive,
   updateUserRole,
+  updateUserWorkforce,
 } from '../../services/admin.service.js';
 import { ROLES, ROUTES } from '../../utils/constants.js';
 import { formatDate } from '../../utils/formatDate.js';
@@ -65,11 +66,21 @@ import { cn } from '../../utils/cn.js';
 
 const PAGE_LIMIT = 20;
 
+const STANDARD_DEPARTMENTS = Object.freeze([
+  'Assembly & Production',
+  'Machining & CNC Operations',
+  'Maintenance & Repairs (LOTO)',
+  'Quality Control & Inspection',
+  'Safety & EHS',
+  'Logistics & Warehousing',
+  'Packaging & Dispatch',
+]);
+
 const ROLE_FILTERS = Object.freeze([
   { id: 'all', label: 'All roles' },
-  { id: ROLES.student, label: 'Students' },
-  { id: ROLES.instructor, label: 'Instructors' },
-  { id: ROLES.admin, label: 'Admins' },
+  { id: ROLES.student, label: 'Workers' },
+  { id: ROLES.instructor, label: 'Trainers / Supervisors' },
+  { id: ROLES.admin, label: 'Factory Admins' },
 ]);
 
 const ACTIVE_OPTIONS = Object.freeze([
@@ -79,9 +90,9 @@ const ACTIVE_OPTIONS = Object.freeze([
 ]);
 
 const ROLE_OPTIONS = Object.freeze([
-  { value: ROLES.student, label: 'Student' },
-  { value: ROLES.instructor, label: 'Instructor' },
-  { value: ROLES.admin, label: 'Admin' },
+  { value: ROLES.student, label: 'Worker' },
+  { value: ROLES.instructor, label: 'Trainer / Supervisor' },
+  { value: ROLES.admin, label: 'Factory Admin' },
 ]);
 
 /* -------------------------------------------------------------------------- */
@@ -141,6 +152,7 @@ function UsersTable({
   togglingId,
   onToggleActive,
   onChangeRole,
+  onEditWorkforce,
   onDelete,
 }) {
   return (
@@ -152,7 +164,19 @@ function UsersTable({
               scope="col"
               className="px-4 py-3 pl-5 text-left text-xs font-semibold uppercase tracking-wider text-text-subtle"
             >
-              User
+              Employee
+            </th>
+            <th
+              scope="col"
+              className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-text-subtle whitespace-nowrap"
+            >
+              Employee ID
+            </th>
+            <th
+              scope="col"
+              className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-text-subtle"
+            >
+              Department & Role
             </th>
             <th
               scope="col"
@@ -189,6 +213,20 @@ function UsersTable({
                 onSelect: () => {
                   window.location.assign(ROUTES.profile(user._id));
                 },
+              },
+              {
+                id: 'training',
+                label: 'View employee record',
+                icon: 'GraduationCap',
+                onSelect: () => {
+                  window.location.assign(ROUTES.adminEmployee(user._id));
+                },
+              },
+              {
+                id: 'workforce',
+                label: 'Edit workforce profile',
+                icon: 'Briefcase',
+                onSelect: () => onEditWorkforce(user),
               },
               {
                 id: 'role',
@@ -228,7 +266,7 @@ function UsersTable({
                     <Avatar size="md" src={user.avatar} name={user.name} />
                     <div className="min-w-0">
                       <Link
-                        to={ROUTES.profile(user._id)}
+                        to={ROUTES.adminEmployee(user._id)}
                         className="block truncate font-medium text-text hover:text-primary max-w-[28ch]"
                       >
                         {user.name}
@@ -242,6 +280,23 @@ function UsersTable({
                         {user.email}
                       </p>
                     </div>
+                  </div>
+                </td>
+                <td className="px-4 py-3 whitespace-nowrap">
+                  {user.employeeId ? (
+                    <Badge variant="neutral" size="sm" className="font-mono">
+                      {user.employeeId}
+                    </Badge>
+                  ) : (
+                    <span className="text-xs text-text-subtle">—</span>
+                  )}
+                </td>
+                <td className="px-4 py-3 min-w-[180px]">
+                  <div className="text-xs font-medium text-text">
+                    {user.department || <span className="text-text-subtle italic">Unassigned</span>}
+                  </div>
+                  <div className="text-xs text-text-muted">
+                    {user.jobTitle || <span className="text-text-subtle italic">No role title</span>}
                   </div>
                 </td>
                 <td className="px-4 py-3">
@@ -328,6 +383,7 @@ export default function UsersPage() {
   const [search, setSearch] = useState('');
   const debouncedSearch = useDebounce(search, 300);
   const [role, setRole] = useState('all');
+  const [departmentFilter, setDepartmentFilter] = useState('all');
   const [activeFilter, setActiveFilter] = useState('all');
   const [page, setPage] = useState(1);
 
@@ -348,6 +404,14 @@ export default function UsersPage() {
     nextRole: ROLES.student,
     loading: false,
   });
+  const [workforceModal, setWorkforceModal] = useState({
+    open: false,
+    user: null,
+    department: '',
+    jobTitle: '',
+    employeeId: '',
+    loading: false,
+  });
   const [deleteModal, setDeleteModal] = useState({
     open: false,
     user: null,
@@ -361,6 +425,7 @@ export default function UsersPage() {
       const result = await listUsers({
         search: debouncedSearch.trim() || undefined,
         role: role === 'all' ? undefined : role,
+        department: departmentFilter === 'all' ? undefined : departmentFilter,
         isActive: activeFilter === 'all' ? undefined : activeFilter,
         sort: 'newest',
         page,
@@ -383,7 +448,7 @@ export default function UsersPage() {
           'Could not load users.',
       );
     }
-  }, [debouncedSearch, role, activeFilter, page]);
+  }, [debouncedSearch, role, departmentFilter, activeFilter, page]);
 
   useEffect(() => {
     fetchUsers();
@@ -393,7 +458,7 @@ export default function UsersPage() {
   // empty page after a filter narrows the result set.
   useEffect(() => {
     setPage(1);
-  }, [debouncedSearch, role, activeFilter]);
+  }, [debouncedSearch, role, departmentFilter, activeFilter]);
 
   /* --------------------------- patch helpers ------------------------------ */
 
@@ -448,6 +513,17 @@ export default function UsersPage() {
     });
   }, []);
 
+  const handleOpenWorkforce = useCallback((user) => {
+    setWorkforceModal({
+      open: true,
+      user,
+      department: user.department || '',
+      jobTitle: user.jobTitle || '',
+      employeeId: user.employeeId || '',
+      loading: false,
+    });
+  }, []);
+
   const handleConfirmRole = useCallback(async () => {
     const { user, nextRole } = roleModal;
     if (!user) return;
@@ -469,6 +545,40 @@ export default function UsersPage() {
       setRoleModal((prev) => ({ ...prev, loading: false }));
     }
   }, [patchUser, roleModal]);
+
+  const handleConfirmWorkforce = useCallback(async () => {
+    const { user, department, jobTitle, employeeId } = workforceModal;
+    if (!user) return;
+    setWorkforceModal((prev) => ({ ...prev, loading: true }));
+    try {
+      const result = await updateUserWorkforce(user._id, {
+        department,
+        jobTitle,
+        employeeId,
+      });
+      const updated = result?.user ?? {
+        ...user,
+        department,
+        jobTitle,
+        employeeId,
+      };
+      patchUser(user._id, updated);
+      toast.success(`Updated workforce profile for ${user.name}.`);
+      setWorkforceModal({
+        open: false,
+        user: null,
+        department: '',
+        jobTitle: '',
+        employeeId: '',
+        loading: false,
+      });
+    } catch (err) {
+      toast.error(
+        err?.response?.data?.message ?? 'Could not update workforce profile.',
+      );
+      setWorkforceModal((prev) => ({ ...prev, loading: false }));
+    }
+  }, [patchUser, workforceModal]);
 
   const handleConfirmDelete = useCallback(async () => {
     const { user } = deleteModal;
@@ -506,12 +616,12 @@ export default function UsersPage() {
       <header className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <h1 className="text-3xl font-semibold tracking-tight text-text">
-            Users
+            Workforce Directory
           </h1>
           <p className="mt-1 text-sm text-text-muted">
             {headerCount === null
               ? 'Loading directory…'
-              : `${headerCount} ${headerCount === 1 ? 'account' : 'accounts'} total`}
+              : `${headerCount} factory ${headerCount === 1 ? 'employee' : 'employees'} total`}
           </p>
         </div>
         <Button
@@ -528,7 +638,7 @@ export default function UsersPage() {
         <div className="flex flex-wrap items-center gap-3">
           <div className="flex-1 min-w-[220px]">
             <Input
-              placeholder="Search by name or email…"
+              placeholder="Search by name, email, employee ID, or role…"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               leadingIcon={<Icon name="Search" size={16} />}
@@ -546,6 +656,19 @@ export default function UsersPage() {
               }
             />
           </div>
+          <Select
+            value={departmentFilter}
+            onChange={(e) => setDepartmentFilter(e.target.value)}
+            aria-label="Filter by department"
+            className="w-56"
+          >
+            <option value="all">All Departments</option>
+            {STANDARD_DEPARTMENTS.map((dept) => (
+              <option key={dept} value={dept}>
+                {dept}
+              </option>
+            ))}
+          </Select>
           <Select
             value={activeFilter}
             onChange={(e) => setActiveFilter(e.target.value)}
@@ -611,6 +734,7 @@ export default function UsersPage() {
           togglingId={togglingId}
           onToggleActive={handleToggleActive}
           onChangeRole={handleOpenRole}
+          onEditWorkforce={handleOpenWorkforce}
           onDelete={(user) =>
             setDeleteModal({ open: true, user, loading: false })
           }
@@ -630,6 +754,135 @@ export default function UsersPage() {
           />
         </div>
       )}
+
+      {/* Workforce profile modal ------------------------------------------ */}
+      <Modal
+        open={workforceModal.open}
+        onClose={
+          workforceModal.loading
+            ? () => {}
+            : () => setWorkforceModal((prev) => ({ ...prev, open: false }))
+        }
+        title={
+          workforceModal.user
+            ? `Workforce Profile — ${workforceModal.user.name}`
+            : 'Workforce Profile'
+        }
+        description="Assign the factory department, job role, and employee ID for this worker."
+        size="md"
+        footer={
+          <>
+            <Button
+              variant="ghost"
+              disabled={workforceModal.loading}
+              onClick={() =>
+                setWorkforceModal((prev) => ({ ...prev, open: false }))
+              }
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={handleConfirmWorkforce}
+              loading={workforceModal.loading}
+            >
+              Save Profile
+            </Button>
+          </>
+        }
+      >
+        <div className="space-y-4">
+          <div>
+            <label htmlFor="workforce-emp-id" className="block text-xs font-semibold text-text mb-1">
+              Employee ID
+            </label>
+            <Input
+              id="workforce-emp-id"
+              placeholder="e.g. EMP-1042"
+              value={workforceModal.employeeId}
+              onChange={(e) =>
+                setWorkforceModal((prev) => ({
+                  ...prev,
+                  employeeId: e.target.value,
+                }))
+              }
+            />
+            <p className="mt-1 text-xs text-text-subtle">
+              Factory identification or badge number.
+            </p>
+          </div>
+
+          <div>
+            <label htmlFor="workforce-dept-select" className="block text-xs font-semibold text-text mb-1">
+              Factory Department
+            </label>
+            <Select
+              id="workforce-dept-select"
+              value={
+                STANDARD_DEPARTMENTS.includes(workforceModal.department)
+                  ? workforceModal.department
+                  : workforceModal.department
+                    ? 'custom'
+                    : ''
+              }
+              onChange={(e) => {
+                const val = e.target.value;
+                setWorkforceModal((prev) => ({
+                  ...prev,
+                  department: val === 'custom' ? prev.department : val,
+                }));
+              }}
+            >
+              <option value="">Select a department…</option>
+              {STANDARD_DEPARTMENTS.map((dept) => (
+                <option key={dept} value={dept}>
+                  {dept}
+                </option>
+              ))}
+              <option value="custom">Other / Custom Department</option>
+            </Select>
+            {(!STANDARD_DEPARTMENTS.includes(workforceModal.department) &&
+              workforceModal.department !== '') ||
+            workforceModal.department === 'custom' ? (
+              <Input
+                aria-label="Custom department name"
+                className="mt-2"
+                placeholder="Enter custom department name…"
+                value={
+                  workforceModal.department === 'custom'
+                    ? ''
+                    : workforceModal.department
+                }
+                onChange={(e) =>
+                  setWorkforceModal((prev) => ({
+                    ...prev,
+                    department: e.target.value,
+                  }))
+                }
+              />
+            ) : null}
+          </div>
+
+          <div>
+            <label htmlFor="workforce-job-title" className="block text-xs font-semibold text-text mb-1">
+              Job Title / Operational Role
+            </label>
+            <Input
+              id="workforce-job-title"
+              placeholder="e.g. Line Operator, CNC Machinist, Quality Inspector"
+              value={workforceModal.jobTitle}
+              onChange={(e) =>
+                setWorkforceModal((prev) => ({
+                  ...prev,
+                  jobTitle: e.target.value,
+                }))
+              }
+            />
+            <p className="mt-1 text-xs text-text-subtle">
+              Operational role determines mandatory competencies and training.
+            </p>
+          </div>
+        </div>
+      </Modal>
 
       {/* Change role modal ------------------------------------------------- */}
       <Modal

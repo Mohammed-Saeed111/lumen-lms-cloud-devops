@@ -161,6 +161,10 @@ const userSchema = new Schema(
       trim: true,
       maxlength: [50, 'Employee ID must be at most 50 characters'],
     },
+    hireDate: {
+      type: Date,
+      default: null,
+    },
     isActive: { type: Boolean, default: true },
     preferences: { type: preferencesSchema, default: () => ({}) },
 
@@ -194,6 +198,18 @@ const userSchema = new Schema(
     timestamps: true,
     toJSON: { virtuals: true, versionKey: false },
     toObject: { virtuals: true, versionKey: false },
+  },
+);
+// Sparse unique index: two employees cannot share the same employee ID, but
+// users without an assigned ID (empty string) are excluded from uniqueness.
+// partialFilterExpression is the MongoDB-native way to implement
+// "unique only when non-empty" without relying on mongoose's sparse option
+// alone (which only excludes documents where the field is absent/null).
+userSchema.index(
+  { employeeId: 1 },
+  {
+    unique: true,
+    partialFilterExpression: { employeeId: { $type: 'string', $gt: '' } },
   },
 );
 

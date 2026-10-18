@@ -372,6 +372,10 @@ const CATALOG_CARD_FIELDS = [
   'totalDuration',
   'enrollmentCount',
   'averageRating',
+  'department',
+  'targetJobRole',
+  'machineModel',
+  'sopReference',
   'publishedAt',
   'createdAt',
   'instructor',
@@ -495,6 +499,14 @@ const buildCatalogQuery = (query) => {
     filter.price = { $eq: 0 };
   } else if (query.priceMode === 'paid') {
     filter.price = { ...(filter.price ?? {}), $gt: 0 };
+  }
+
+  if (typeof query.department === 'string' && query.department.trim().length > 0) {
+    filter.department = query.department.trim();
+  }
+
+  if (typeof query.targetJobRole === 'string' && query.targetJobRole.trim().length > 0) {
+    filter.targetJobRole = query.targetJobRole.trim();
   }
 
   const sort = CATALOG_SORT_MAP[query.sort] ?? CATALOG_SORT_MAP.newest;
@@ -656,6 +668,7 @@ export const getCourseCurriculum = asyncHandler(async (req, res) => {
     const enrollment = await Enrollment.exists({
       userId: req.user._id,
       courseId: course._id,
+      status: { $ne: 'revoked' },
     });
     viewerIsEnrolled = Boolean(enrollment);
   }

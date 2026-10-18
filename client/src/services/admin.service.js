@@ -26,13 +26,14 @@ export const getStats = async () => {
 export const listUsers = async ({
   search,
   role,
+  department,
   isActive,
   sort,
   page = 1,
   limit = ADMIN_DEFAULT_LIMIT,
 } = {}) => {
   const { data } = await api.get('/admin/users', {
-    params: { search, role, isActive, sort, page, limit },
+    params: { search, role, department, isActive, sort, page, limit },
   });
   return data;
 };
@@ -44,6 +45,20 @@ export const getUserById = async (id) => {
 
 export const updateUserRole = async (id, role) => {
   const { data } = await api.patch(`/admin/users/${id}/role`, { role });
+  return data;
+};
+
+export const updateUserWorkforce = async (id, { department, jobTitle, employeeId }) => {
+  const { data } = await api.patch(`/admin/users/${id}/workforce`, {
+    department,
+    jobTitle,
+    employeeId,
+  });
+  return data;
+};
+
+export const listWorkforceDepartments = async () => {
+  const { data } = await api.get('/admin/workforce/departments');
   return data;
 };
 

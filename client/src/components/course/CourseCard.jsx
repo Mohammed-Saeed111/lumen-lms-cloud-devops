@@ -66,60 +66,86 @@ const LEVEL_LABEL = {
  * `default` covers any unknown category string from older seed data.
  */
 const CATEGORY_FALLBACK = {
-  'Web Development': {
-    icon: 'Code2',
-    gradient: 'from-info/30 via-primary/15 to-bg-muted',
-    iconColor: 'text-info/70',
+  'safety-ehs': {
+    icon: 'ShieldAlert',
+    gradient: 'from-danger/20 via-warning/10 to-bg-muted',
+    iconColor: 'text-danger',
   },
-  'Mobile Development': {
-    icon: 'Smartphone',
-    gradient: 'from-success/30 via-info/15 to-bg-muted',
-    iconColor: 'text-success/70',
+  'Safety & EHS': {
+    icon: 'ShieldAlert',
+    gradient: 'from-danger/20 via-warning/10 to-bg-muted',
+    iconColor: 'text-danger',
   },
-  Design: {
-    icon: 'Palette',
-    gradient: 'from-warning/30 via-primary/15 to-bg-muted',
-    iconColor: 'text-warning/70',
+  'machining-cnc': {
+    icon: 'Cog',
+    gradient: 'from-primary/20 via-slate-700/10 to-bg-muted',
+    iconColor: 'text-primary',
   },
-  'Data Science': {
-    icon: 'LineChart',
-    gradient: 'from-primary/30 via-info/15 to-bg-muted',
-    iconColor: 'text-primary/70',
+  'Machining & CNC': {
+    icon: 'Cog',
+    gradient: 'from-primary/20 via-slate-700/10 to-bg-muted',
+    iconColor: 'text-primary',
   },
-  Business: {
-    icon: 'Briefcase',
-    gradient: 'from-info/25 via-success/15 to-bg-muted',
-    iconColor: 'text-info/70',
+  'assembly-operations': {
+    icon: 'Layers',
+    gradient: 'from-primary/20 via-slate-700/10 to-bg-muted',
+    iconColor: 'text-primary',
   },
-  Marketing: {
-    icon: 'Megaphone',
-    gradient: 'from-danger/25 via-warning/15 to-bg-muted',
-    iconColor: 'text-danger/70',
+  'Assembly & Production': {
+    icon: 'Layers',
+    gradient: 'from-primary/20 via-slate-700/10 to-bg-muted',
+    iconColor: 'text-primary',
   },
-  Photography: {
-    icon: 'Camera',
-    gradient: 'from-text/20 via-primary/10 to-bg-muted',
-    iconColor: 'text-text/60',
+  'maintenance-repairs': {
+    icon: 'Wrench',
+    gradient: 'from-warning/20 via-slate-700/10 to-bg-muted',
+    iconColor: 'text-warning',
   },
-  Music: {
-    icon: 'Music2',
-    gradient: 'from-warning/25 via-danger/15 to-bg-muted',
-    iconColor: 'text-warning/70',
+  'Maintenance & Repairs': {
+    icon: 'Wrench',
+    gradient: 'from-warning/20 via-slate-700/10 to-bg-muted',
+    iconColor: 'text-warning',
+  },
+  'quality-control': {
+    icon: 'CheckCircle2',
+    gradient: 'from-success/20 via-slate-700/10 to-bg-muted',
+    iconColor: 'text-success',
+  },
+  'Quality Control': {
+    icon: 'CheckCircle2',
+    gradient: 'from-success/20 via-slate-700/10 to-bg-muted',
+    iconColor: 'text-success',
+  },
+  'operating-procedures': {
+    icon: 'FileText',
+    gradient: 'from-info/20 via-slate-700/10 to-bg-muted',
+    iconColor: 'text-info',
+  },
+  'Standard Operating Procedures': {
+    icon: 'FileText',
+    gradient: 'from-info/20 via-slate-700/10 to-bg-muted',
+    iconColor: 'text-info',
+  },
+  'logistics-warehousing': {
+    icon: 'Truck',
+    gradient: 'from-slate-700/20 via-primary/10 to-bg-muted',
+    iconColor: 'text-text-muted',
+  },
+  'general-factory': {
+    icon: 'Factory',
+    gradient: 'from-primary/20 via-slate-700/10 to-bg-muted',
+    iconColor: 'text-primary',
+  },
+  programming: {
+    icon: 'Cpu',
+    gradient: 'from-info/20 via-primary/10 to-bg-muted',
+    iconColor: 'text-info',
   },
   default: {
-    icon: 'GraduationCap',
-    gradient: 'from-primary/25 via-info/15 to-bg-muted',
-    iconColor: 'text-primary/60',
+    icon: 'Factory',
+    gradient: 'from-primary/20 via-slate-700/10 to-bg-muted',
+    iconColor: 'text-primary',
   },
-};
-
-const formatPrice = (price) => {
-  if (price === null || price === undefined || Number(price) === 0) return null;
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    maximumFractionDigits: 0,
-  }).format(Number(price));
 };
 
 const formatEnrolled = (count) => {
@@ -140,13 +166,11 @@ function CourseCardComponent({ course, className }) {
 
   if (!course) return null;
 
-  const instructorName = course.instructor?.name ?? 'Lumen Instructor';
+  const instructorName = course.instructor?.name ?? 'Opervanta Instructor';
   const instructorAvatar = course.instructor?.avatar;
   const lessons = course.totalLessons ?? 0;
   const duration = formatDuration(course.totalDuration);
   const enrolled = formatEnrolled(course.enrollmentCount);
-  const priceLabel = formatPrice(course.price);
-  const isFree = priceLabel === null;
 
   const rawThumb = course.thumbnail?.url ?? course.thumbnail;
   const thumbSrc =
@@ -159,9 +183,9 @@ function CourseCardComponent({ course, className }) {
       to={ROUTES.courseDetail(course.slug)}
       aria-label={`${course.title} by ${instructorName}`}
       className={cn(
-        'group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-bg shadow-xs',
+        'group flex h-full flex-col overflow-hidden rounded-xl border border-border bg-bg shadow-xs',
         'transition-all duration-200 ease-out',
-        'hover:-translate-y-1 hover:shadow-md hover:border-border-strong',
+        'hover:-translate-y-0.5 hover:shadow-md hover:border-border-strong',
         'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary',
         className,
       )}
@@ -194,8 +218,8 @@ function CourseCardComponent({ course, className }) {
               // intentional) and the LQIP fade-in (fast, just enough to
               // smooth the swap). Stacking two `transition-*` utilities
               // would let the second one win and skip the scale entirely.
-              'transition-all duration-500',
-              'group-hover:scale-[1.06]',
+              'transition-all duration-300',
+              'group-hover:scale-[1.02]',
               'opacity-0',
               thumbLoaded && 'opacity-100',
             )}
@@ -225,12 +249,6 @@ function CourseCardComponent({ course, className }) {
             className="absolute left-3 top-3 backdrop-blur-sm"
           >
             {LEVEL_LABEL[course.level] ?? course.level}
-          </Badge>
-        )}
-
-        {isFree && (
-          <Badge variant="success" className="absolute right-3 top-3 backdrop-blur-sm">
-            Free
           </Badge>
         )}
       </div>
@@ -272,22 +290,16 @@ function CourseCardComponent({ course, className }) {
         </ul>
 
         <div className="flex items-center justify-between border-t border-border pt-3">
-          <span
-            className={cn(
-              'text-lg font-semibold tracking-tight',
-              isFree ? 'text-success' : 'text-text',
-            )}
-          >
-            {isFree ? 'Free' : priceLabel}
+          <span className="inline-flex items-center gap-1.5 text-xs font-medium text-text-muted">
+            <Icon name="ShieldCheck" size={14} className="text-primary" />
+            <span>Workforce Module</span>
           </span>
           <span
             aria-hidden="true"
             className="inline-flex items-center gap-1 text-xs font-medium text-primary
-              opacity-0 -translate-x-1 transition-all duration-200
-              group-hover:opacity-100 group-hover:translate-x-0
-              group-focus-visible:opacity-100 group-focus-visible:translate-x-0"
+              transition-all duration-200 group-hover:translate-x-0.5"
           >
-            View course
+            View program
             <Icon name="ArrowRight" size={14} />
           </span>
         </div>

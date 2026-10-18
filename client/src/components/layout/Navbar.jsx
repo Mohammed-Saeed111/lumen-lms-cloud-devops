@@ -130,7 +130,7 @@ const SearchBox = ({ onSubmit, autoFocus = false }) => {
   return (
     <form role="search" onSubmit={submit} className="w-full max-w-md">
       <label htmlFor="navbar-search" className="sr-only">
-        Search courses
+        Search training modules
       </label>
       <Input
         id="navbar-search"
@@ -139,7 +139,7 @@ const SearchBox = ({ onSubmit, autoFocus = false }) => {
         value={value}
         onChange={(event) => setValue(event.target.value)}
         onKeyDown={handleKeyDown}
-        placeholder="Search courses…"
+        placeholder="Search training modules…"
         leadingIcon={<Icon name="Search" size={16} />}
         trailingIcon={<KBD className="hidden md:inline-flex">/</KBD>}
       />
@@ -265,7 +265,7 @@ export function Navbar() {
         <Link
           to={ROUTES.home}
           className="flex items-center gap-2 shrink-0 text-text hover:text-primary transition-colors"
-          aria-label="Lumen LMS — home"
+          aria-label="Opervanta — home"
         >
           <span className="hidden sm:inline-flex"><Logo decorative /></span>
           <span className="sm:hidden"><LogoMark /></span>

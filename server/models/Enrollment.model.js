@@ -82,6 +82,46 @@ const enrollmentSchema = new Schema(
       min: [0, 'Progress cannot be negative'],
       max: [100, 'Progress cannot exceed 100'],
     },
+    status: {
+      type: String,
+      enum: ['active', 'revoked'],
+      default: 'active',
+      index: true,
+    },
+    revokedAt: {
+      type: Date,
+      default: null,
+    },
+    revokedBy: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      default: null,
+    },
+    // Set when an admin marks this enrollment as mandatory compliance training.
+    // Null means the worker self-enrolled or was enrolled without a mandate.
+    isMandatory: {
+      type: Boolean,
+      default: false,
+    },
+    // Tracks which admin (or system process) assigned this enrollment when
+    // it was not self-initiated. Null for self-enrollments.
+    assignedBy: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      default: null,
+    },
+    // ISO timestamp when an admin-initiated enrollment was created.
+    assignedAt: {
+      type: Date,
+      default: null,
+    },
+    // When set, the certificate (if any) expires on this date. Null means
+    // the certificate does not expire. Used for periodic re-certification
+    // requirements (e.g. annual LOTO, safety refreshers).
+    certificateExpiresAt: {
+      type: Date,
+      default: null,
+    },
   },
   {
     timestamps: true,

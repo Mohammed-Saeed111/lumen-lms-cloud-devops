@@ -21,8 +21,8 @@ const VARIANTS = {
 };
 
 const SIZES = {
-  sm: 'h-5 px-1.5 text-[11px] gap-1',
-  md: 'h-6 px-2 text-xs gap-1.5',
+  sm: 'h-5 px-2 text-[11px] gap-1 font-medium',
+  md: 'h-6 px-2.5 text-xs gap-1.5 font-medium',
 };
 
 export const Badge = forwardRef(function Badge(
@@ -33,7 +33,7 @@ export const Badge = forwardRef(function Badge(
     <span
       ref={ref}
       className={cn(
-        'inline-flex items-center font-medium rounded-full border whitespace-nowrap',
+        'inline-flex items-center rounded-md border whitespace-nowrap',
         VARIANTS[variant],
         SIZES[size],
         className,

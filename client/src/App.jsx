@@ -136,6 +136,18 @@ const AdminCoursesPage = lazy(() => import('./pages/admin/CoursesPage.jsx'));
 const AdminPendingReviewPage = lazy(() =>
   import('./pages/admin/PendingReviewPage.jsx'),
 );
+const AdminDepartmentsPage = lazy(() =>
+  import('./pages/admin/DepartmentsPage.jsx'),
+);
+const AdminJobsPage = lazy(() =>
+  import('./pages/admin/JobsPage.jsx'),
+);
+const AdminTrainingRecordsPage = lazy(() =>
+  import('./pages/admin/TrainingRecordsPage.jsx'),
+);
+const AdminEmployeeDetailPage = lazy(() =>
+  import('./pages/admin/EmployeeDetailPage.jsx'),
+);
 
 // Dev-only
 const StyleGuidePage = lazy(() => import('./pages/dev/StyleGuidePage.jsx'));
@@ -231,6 +243,10 @@ export default function App() {
         <Route path="users" element={<AdminUsersPage />} />
         <Route path="courses" element={<AdminCoursesPage />} />
         <Route path="pending" element={<AdminPendingReviewPage />} />
+        <Route path="departments" element={<AdminDepartmentsPage />} />
+        <Route path="jobs" element={<AdminJobsPage />} />
+        <Route path="training" element={<AdminTrainingRecordsPage />} />
+        <Route path="employees/:id" element={<AdminEmployeeDetailPage />} />
       </Route>
 
       {/* Lesson player + quiz — minimal `LearnLayout`, enrollment-gated.

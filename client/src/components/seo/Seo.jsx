@@ -35,7 +35,7 @@
 
 import { Helmet } from 'react-helmet-async';
 
-const APP_NAME = import.meta.env.VITE_APP_NAME || 'Lumen LMS';
+const APP_NAME = import.meta.env.VITE_APP_NAME || 'Opervanta';
 const SITE_URL = (import.meta.env.VITE_SITE_URL || '').replace(/\/$/, '');
 const DEFAULT_IMAGE = '/og-default.png';
 

@@ -76,18 +76,7 @@ const TAB_ITEMS = [
   { id: 'overview', label: 'Overview' },
   { id: 'curriculum', label: 'Curriculum' },
   { id: 'instructor', label: 'Instructor' },
-  { id: 'reviews', label: 'Reviews' },
 ];
-
-const formatPrice = (price) => {
-  const numeric = Number(price);
-  if (!Number.isFinite(numeric) || numeric <= 0) return null;
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    maximumFractionDigits: 0,
-  }).format(numeric);
-};
 
 const findFirstPreviewLesson = (sections) => {
   for (const section of sections ?? []) {
@@ -245,7 +234,7 @@ export default function CourseDetailPage() {
       description: course.shortDescription || course.description,
       provider: {
         '@type': 'Organization',
-        name: import.meta.env.VITE_APP_NAME || 'Lumen LMS',
+        name: import.meta.env.VITE_APP_NAME || 'Opervanta',
         sameAs:
           typeof window !== 'undefined' ? window.location.origin : undefined,
       },
@@ -322,9 +311,6 @@ export default function CourseDetailPage() {
     onPreview: setPreviewLesson,
   };
 
-  const priceLabel = formatPrice(course.price);
-  const isFree = priceLabel === null;
-
   return (
     <div className="pb-24 lg:pb-12">
       <Seo
@@ -361,7 +347,6 @@ export default function CourseDetailPage() {
               {activeTab === 'instructor' && (
                 <InstructorTab instructor={course.instructor} />
               )}
-              {activeTab === 'reviews' && <ReviewsTab />}
             </Tabs>
           </main>
 
@@ -383,8 +368,6 @@ export default function CourseDetailPage() {
           isOwner={isOwner}
           enrolling={enrolling}
           onEnroll={handleEnroll}
-          isFree={isFree}
-          priceLabel={priceLabel}
         />
       )}
 
@@ -584,17 +567,6 @@ function InstructorTab({ instructor }) {
   );
 }
 
-function ReviewsTab() {
-  return (
-    <EmptyState
-      icon="Star"
-      title="Reviews are coming soon"
-      description="Once learners start finishing this course you'll see their feedback here."
-      size="sm"
-    />
-  );
-}
-
 function MobileEnrollmentBar({
   course,
   enrollment,
@@ -602,8 +574,6 @@ function MobileEnrollmentBar({
   isOwner,
   enrolling,
   onEnroll,
-  isFree,
-  priceLabel,
 }) {
   const isEnrolled = Boolean(enrollment);
 
@@ -612,7 +582,7 @@ function MobileEnrollmentBar({
     cta = (
       <Link to={ROUTES.instructorCourseEdit(course._id ?? course.id)} className="block">
         <Button variant="outline" className="w-full">
-          Edit course
+          Edit training module
         </Button>
       </Link>
     );
@@ -620,39 +590,32 @@ function MobileEnrollmentBar({
     cta = (
       <Link to={ROUTES.courseLearn(course.slug)} className="block">
         <Button className="w-full" rightIcon={<Icon name="ArrowRight" size={16} />}>
-          Continue
+          Continue training
         </Button>
       </Link>
     );
   } else if (!isAuthenticated) {
-    const nextHref = `${ROUTES.register}?next=${encodeURIComponent(
+    const nextHref = `${ROUTES.login}?next=${encodeURIComponent(
       ROUTES.courseDetail(course.slug),
     )}`;
     return (
       <div className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-bg/95 backdrop-blur-md p-3 lg:hidden">
         <Link to={nextHref} className="block">
-          <Button className="w-full">Sign up to enroll</Button>
+          <Button className="w-full">Log in to access training</Button>
         </Link>
       </div>
     );
   } else {
     cta = (
       <Button className="w-full" loading={enrolling} onClick={onEnroll}>
-        {isFree ? 'Enroll for free' : `Enroll · ${priceLabel}`}
+        Start training program
       </Button>
     );
   }
 
   return (
     <div className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-bg/95 backdrop-blur-md p-3 lg:hidden">
-      <div className="flex items-center gap-3">
-        {!isEnrolled && !isOwner && (
-          <span className={['shrink-0 text-lg font-semibold tracking-tight', isFree ? 'text-success' : 'text-text'].join(' ')}>
-            {isFree ? 'Free' : priceLabel}
-          </span>
-        )}
-        <div className="flex-1">{cta}</div>
-      </div>
+      <div className="w-full">{cta}</div>
     </div>
   );
 }

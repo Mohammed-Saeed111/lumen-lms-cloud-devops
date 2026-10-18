@@ -77,7 +77,7 @@ function WelcomeStep({ firstName }) {
       </div>
 
       <h3 className="text-2xl font-semibold tracking-tight text-text">
-        Welcome to Lumen LMS{firstName ? `, ${firstName}` : ''}!
+        Welcome to Opervanta{firstName ? `, ${firstName}` : ''}!
       </h3>
       <p className="mt-3 max-w-md text-sm text-text-muted">
         Let&apos;s personalise your home screen in under a minute. We&apos;ll ask
@@ -195,8 +195,8 @@ function FirstCourseStep({ interests, recommendation }) {
         </h3>
         <p className="mt-1.5 text-sm text-text-muted">
           {primaryInterest
-            ? "Here's the most loved course in that topic. Open it now or browse the full catalog."
-            : "Here's one of the most loved courses on Lumen. Open it now or browse the full catalog."}
+            ? "Here's a foundational qualification module in that department. Open it now or browse the full catalog."
+            : "Here's a foundational qualification module on Opervanta. Open it now or browse the full catalog."}
         </p>
       </header>
 

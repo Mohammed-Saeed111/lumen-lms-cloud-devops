@@ -68,6 +68,7 @@ import quizRoutes from './routes/quiz.routes.js';
 import sectionRoutes, { courseSectionsRouter } from './routes/section.routes.js';
 import uploadRoutes from './routes/upload.routes.js';
 import userRoutes from './routes/user.routes.js';
+import workforceRoutes from './routes/workforce.routes.js';
 import { httpLogger, logger } from './utils/logger.js';
 import { renderWelcomePage } from './utils/welcomePage.js';
 
@@ -241,6 +242,7 @@ app.use('/api/instructors', instructorRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/workforce', workforceRoutes);
 
 // 16) 404 handler — must come after all real routes.
 app.use(notFound);

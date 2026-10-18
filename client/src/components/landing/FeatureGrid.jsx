@@ -15,27 +15,27 @@ import { stagger, staggerItem } from '../../utils/motion.js';
 
 const FEATURES = [
   {
-    icon: 'Video',
-    title: 'HD video lessons',
-    description: 'Crisp, professionally produced lessons that play smoothly on every device.',
+    icon: 'ShieldCheck',
+    title: 'SOP & Safety Protocols',
+    description: 'Structured standard operating procedures and hazard prevention training for plant personnel.',
     accent: 'text-primary bg-primary/10',
   },
   {
     icon: 'ClipboardCheck',
-    title: 'Auto-graded quizzes',
-    description: 'Reinforce what you learn with instant feedback after every section.',
+    title: 'Knowledge Assessments',
+    description: 'Rigorous compliance and safety quizzes to verify operator understanding before plant floor duties.',
     accent: 'text-info bg-info/10',
   },
   {
     icon: 'TrendingUp',
-    title: 'Progress tracking',
-    description: 'See exactly where you left off and how far you have come on every course.',
+    title: 'Workforce Progress Tracking',
+    description: 'Real-time visibility into qualification status and completed compliance milestones across teams.',
     accent: 'text-success bg-success/10',
   },
   {
     icon: 'Award',
-    title: 'Verifiable certificates',
-    description: 'Download a shareable certificate when you finish — perfect for LinkedIn.',
+    title: 'Verifiable Credentials',
+    description: 'Training records and qualification tracking for workforce oversight.',
     accent: 'text-warning bg-warning/10',
   },
 ];
@@ -49,17 +49,17 @@ export function FeatureGrid() {
       <div className="mx-auto max-w-7xl px-6 py-16 lg:py-20">
         <Reveal className="max-w-2xl mb-12">
           <p className="text-xs font-semibold uppercase tracking-wider text-primary">
-            Why Lumen
+            Why Opervanta
           </p>
           <h2
             id="features-heading"
             className="mt-3 text-2xl sm:text-3xl font-semibold tracking-tight text-text"
           >
-            Built for learners who want to actually finish
+            Built for factory workforce qualification &amp; compliance
           </h2>
           <p className="mt-3 text-text-muted">
-            Every feature is designed around the moments where most online
-            courses lose people — the gap between watching and doing.
+            Engineered for plant operations, environmental health &amp; safety (EHS),
+            and shop-floor competence management.
           </p>
         </Reveal>
 

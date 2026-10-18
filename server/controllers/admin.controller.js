@@ -82,11 +82,20 @@ const buildUserListQuery = (query) => {
     // crafted `?search=(a+)+$` cannot peg the event loop.
     const safe = escapeRegex(query.search.trim());
     const re = new RegExp(safe, 'i');
-    filter.$or = [{ name: re }, { email: re }];
+    filter.$or = [
+      { name: re },
+      { email: re },
+      { employeeId: re },
+      { jobTitle: re },
+    ];
   }
 
   if (typeof query.role === 'string' && query.role.length > 0) {
     filter.role = query.role;
+  }
+
+  if (typeof query.department === 'string' && query.department.trim().length > 0) {
+    filter.department = query.department.trim();
   }
 
   if (query.isActive === 'true') filter.isActive = true;
@@ -372,6 +381,99 @@ export const toggleUserActive = asyncHandler(async (req, res) => {
   await target.save();
 
   return res.json({ success: true, user: target.toSafeJSON() });
+});
+
+/**
+ * PATCH /api/admin/users/:id/workforce
+ *
+ * Update an employee's industrial workforce attributes:
+ * department, jobTitle, and employeeId.
+ */
+export const updateUserWorkforce = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const target = await User.findById(id);
+  if (!target) throw ApiError.notFound('User not found.');
+
+  const { department, jobTitle, employeeId, hireDate } = req.body;
+  const changes = {};
+
+  if (department !== undefined) {
+    target.department = String(department).trim();
+    changes.department = target.department;
+  }
+  if (jobTitle !== undefined) {
+    target.jobTitle = String(jobTitle).trim();
+    changes.jobTitle = target.jobTitle;
+  }
+  if (hireDate !== undefined) {
+    target.hireDate = hireDate ? new Date(hireDate) : null;
+    changes.hireDate = target.hireDate;
+  }
+
+  // employeeId uniqueness guard — check before saving.
+  if (employeeId !== undefined) {
+    const newId = String(employeeId).trim();
+    if (newId && newId !== target.employeeId) {
+      const conflict = await User.findOne({ employeeId: newId, _id: { $ne: target._id } }).lean();
+      if (conflict) {
+        throw ApiError.conflict(`Employee ID "${newId}" is already assigned to another employee.`);
+      }
+    }
+    target.employeeId = newId;
+    changes.employeeId = newId;
+  }
+
+  await target.save();
+
+  // Audit log — import lazily to avoid circular deps.
+  const { logAction } = await import('../models/AuditLog.model.js');
+  await logAction({
+    actorId: req.user._id,
+    actorRole: req.user.role,
+    action: 'user.workforce_update',
+    resourceType: 'user',
+    resourceId: target._id,
+    changes,
+  });
+
+  return res.json({ success: true, user: target.toSafeJSON() });
+});
+
+
+/**
+ * GET /api/admin/workforce/departments
+ *
+ * Aggregated summary of factory departments, worker counts, active job roles,
+ * and associated courses.
+ */
+export const getWorkforceDepartments = asyncHandler(async (_req, res) => {
+  const [userDepts, courseDepts] = await Promise.all([
+    User.aggregate([
+      { $match: { department: { $exists: true, $ne: '' } } },
+      {
+        $group: {
+          _id: '$department',
+          workerCount: { $sum: 1 },
+          roles: { $addToSet: '$jobTitle' },
+        },
+      },
+      { $sort: { _id: 1 } },
+    ]),
+    Course.aggregate([
+      { $match: { department: { $exists: true, $ne: '' } } },
+      { $group: { _id: '$department', courseCount: { $sum: 1 } } },
+    ]),
+  ]);
+
+  const courseMap = new Map(courseDepts.map((c) => [c._id, c.courseCount]));
+  const departments = userDepts.map((d) => ({
+    department: d._id,
+    workerCount: d.workerCount,
+    roles: d.roles.filter(Boolean),
+    courseCount: courseMap.get(d._id) || 0,
+  }));
+
+  res.json({ success: true, data: { departments } });
 });
 
 /**

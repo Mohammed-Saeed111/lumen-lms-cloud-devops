@@ -26,15 +26,14 @@ import {
   HeroSection,
   HowItWorks,
   InstructorCTA,
-  TestimonialGrid,
 } from '../../components/landing/index.js';
 
 export default function LandingPage() {
   return (
     <>
       <Seo
-        title="Learn anything online"
-        description="Project-based courses in programming, design, business and more. Learn at your pace with HD video, quizzes, progress tracking and verifiable certificates."
+        title="Industrial Workforce Training & Competency Management Platform"
+        description="Opervanta powers industrial workforce training, standard operating procedure compliance, and shop-floor competency qualifications."
         url="/"
       />
 
@@ -44,7 +43,6 @@ export default function LandingPage() {
       <HowItWorks />
       <FeatureGrid />
       <InstructorCTA />
-      <TestimonialGrid />
       <FaqAccordion />
       <FinalCta />
     </>

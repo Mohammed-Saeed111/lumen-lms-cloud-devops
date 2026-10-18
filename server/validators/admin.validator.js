@@ -103,9 +103,20 @@ const isActiveBodyChain = () =>
     .isBoolean()
     .withMessage('isActive must be a boolean.');
 
+const departmentQueryChain = () =>
+  query('department')
+    .optional()
+    .isString()
+    .withMessage('Department must be a string.')
+    .bail()
+    .trim()
+    .isLength({ max: 100 })
+    .withMessage('Department must be at most 100 characters.');
+
 export const listUsersValidator = [
   searchChain(),
   roleQueryChain(),
+  departmentQueryChain(),
   isActiveQueryChain(),
   sortChain(),
   pageChain(),
@@ -117,6 +128,38 @@ export const userIdParamValidator = [mongoIdParam('id')];
 export const updateUserRoleValidator = [mongoIdParam('id'), roleBodyChain()];
 
 export const toggleUserActiveValidator = [mongoIdParam('id'), isActiveBodyChain()];
+
+export const updateUserWorkforceValidator = [
+  mongoIdParam('id'),
+  body('department')
+    .optional()
+    .isString()
+    .withMessage('Department must be a string.')
+    .bail()
+    .trim()
+    .isLength({ max: 100 })
+    .withMessage('Department must be at most 100 characters.'),
+  body('jobTitle')
+    .optional()
+    .isString()
+    .withMessage('Job title must be a string.')
+    .bail()
+    .trim()
+    .isLength({ max: 100 })
+    .withMessage('Job title must be at most 100 characters.'),
+  body('employeeId')
+    .optional()
+    .isString()
+    .withMessage('Employee ID must be a string.')
+    .bail()
+    .trim()
+    .isLength({ max: 50 })
+    .withMessage('Employee ID must be at most 50 characters.'),
+  body('hireDate')
+    .optional({ nullable: true })
+    .isISO8601()
+    .withMessage('hireDate must be a valid ISO 8601 date string.'),
+];
 
 // ---------------------------------------------------------------------------
 // Admin course moderation validators.
